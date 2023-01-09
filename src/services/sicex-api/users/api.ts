@@ -27,3 +27,14 @@ export async function userList(
     ...(options || {}),
   });
 }
+
+/**  GET /api/userList */
+export async function userTemplateList(params: {}, options?: { [key: string]: any }) {
+  return request<SicexAPI.UserTemplateList>('/api/users/templates', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}

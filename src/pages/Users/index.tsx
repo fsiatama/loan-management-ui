@@ -9,8 +9,9 @@ const UsersList: React.FC = () => {
   const intl = useIntl();
   const columns: ProColumns<SicexAPI.CurrentUser>[] = [
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.name" defaultMessage="" />,
-      dataIndex: 'name',
+      title: 'ID',
+      dataIndex: 'id',
+      hideInSearch: true,
       render: (dom, entity) => {
         return (
           <a
@@ -25,9 +26,11 @@ const UsersList: React.FC = () => {
       },
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.lastName" defaultMessage="" />,
-      dataIndex: 'lastName',
-      hideInSearch: true,
+      title: <FormattedMessage id="pages.userGrid.updateForm.user.name" defaultMessage="" />,
+      dataIndex: 'name',
+      render: (dom, entity) => {
+        return <>{`${entity.name}  ${entity.lastName}`}</>;
+      },
     },
     {
       title: <FormattedMessage id="pages.userGrid.updateForm.user.username" defaultMessage="" />,
@@ -61,13 +64,14 @@ const UsersList: React.FC = () => {
     <PageContainer>
       <ProTable<SicexAPI.CurrentUser, API.PageParams>
         headerTitle={intl.formatMessage({
-          id: 'pages.searchTable.title',
-          defaultMessage: 'Enquiry form',
+          id: 'pages.userTable.title',
+          defaultMessage: '',
         })}
         // actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
-          labelWidth: 120,
+          labelWidth: 1,
+          filterType: 'query',
         }}
         toolBarRender={() => [
           <Button

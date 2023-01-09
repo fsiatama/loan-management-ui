@@ -14,6 +14,18 @@ declare namespace SicexAPI {
     canRenovate: boolean;
     canDownload: boolean;
     useMfa: boolean;
+    isTemplate: boolean;
+  };
+
+  type CurrentCompany = {
+    id: number;
+    name: string;
+    nit: string;
+    digcheq: string;
+    allowedIps: string;
+    userTemplateId: number;
+    userTemplate: CurrentUser;
+    totalUsersCount: number;
   };
 
   type LoginResult = {
@@ -30,6 +42,13 @@ declare namespace SicexAPI {
 
   type UserList = {
     data?: CurrentUser[];
+    total?: number;
+    success?: boolean;
+  };
+  type UserTemplateList = Partial<CurrentUser>[];
+
+  type CompanyList = {
+    data?: CurrentCompany[];
     total?: number;
     success?: boolean;
   };

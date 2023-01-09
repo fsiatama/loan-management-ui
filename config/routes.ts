@@ -40,6 +40,12 @@
     component: './Users',
   },
   {
+    name: 'list.companies-list',
+    icon: 'table',
+    path: '/companies',
+    component: './Companies',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },
