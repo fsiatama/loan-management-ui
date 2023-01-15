@@ -1,4 +1,5 @@
 declare namespace SicexAPI {
+  type ResponseError = { response: { data: { message: string } } };
   type CurrentUser = {
     access: string;
     id: number;
@@ -15,6 +16,7 @@ declare namespace SicexAPI {
     canDownload: boolean;
     useMfa: boolean;
     isTemplate: boolean;
+    company: CurrentCompany;
   };
 
   type CurrentCompany = {
@@ -52,4 +54,5 @@ declare namespace SicexAPI {
     total?: number;
     success?: boolean;
   };
+  type CompaniesNameList = Partial<CurrentCompany>[];
 }

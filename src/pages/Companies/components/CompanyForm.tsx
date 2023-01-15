@@ -1,16 +1,10 @@
+import React from 'react';
+import { Col, Input, Row } from 'antd';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import React from 'react';
 import useCompanyForm from '../hooks/useCompanyForm';
-import { Col, Input, Row } from 'antd';
 
-export type FormValueType = {
-  target?: string;
-  template?: string;
-  type?: string;
-  time?: string;
-  frequency?: string;
-} & Partial<SicexAPI.CurrentCompany>;
+export type FormValueType = Partial<SicexAPI.CurrentCompany>;
 
 export type CompanyFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
@@ -21,7 +15,7 @@ export type CompanyFormProps = {
 
 const CompanyForm: React.FC<CompanyFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {
   const intl = useIntl();
-  const { _handleSubmitForm, _getUserTemplateOptions } = useCompanyForm({ onFinish });
+  const { _handleSubmitForm, userTemplatesList } = useCompanyForm({ onFinish });
   return (
     <ModalForm
       title={intl.formatMessage({
@@ -32,11 +26,13 @@ const CompanyForm: React.FC<CompanyFormProps> = ({ formModalOpen, values, onCanc
       open={formModalOpen}
       onFinish={_handleSubmitForm}
       initialValues={values}
+      omitNil={false}
       modalProps={{
         destroyOnClose: true,
         onCancel: () => onCancel(),
       }}
     >
+      <ProFormText hidden name="id" />
       <ProFormText
         rules={[
           {
@@ -94,7 +90,7 @@ const CompanyForm: React.FC<CompanyFormProps> = ({ formModalOpen, values, onCanc
         label={intl.formatMessage({
           id: 'pages.companyGrid.updateForm.userTemplate',
         })}
-        request={_getUserTemplateOptions}
+        options={userTemplatesList}
       />
     </ModalForm>
   );

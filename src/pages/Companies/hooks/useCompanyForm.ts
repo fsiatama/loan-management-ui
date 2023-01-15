@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import { message } from 'antd';
-import { RequestOptionsType } from '@ant-design/pro-components';
+import { DefaultOptionType } from 'antd/es/select';
 
-import { addCompany } from '@/services/sicex-api/companies/api';
+import { addCompany, editCompany } from '@/services/sicex-api/companies/api';
 import { userTemplateList } from '@/services/sicex-api/users/api';
 
-const _handleAdd = async (fields: SicexAPI.CurrentCompany) => {
+const handleAdd = async (fields: SicexAPI.CurrentCompany) => {
   const hide = message.loading('Loading');
   try {
     await addCompany({ ...fields });
@@ -18,32 +19,64 @@ const _handleAdd = async (fields: SicexAPI.CurrentCompany) => {
   }
 };
 
+const handleEdit = async (fields: Partial<SicexAPI.CurrentCompany>) => {
+  const hide = message.loading('Loading');
+  try {
+    await editCompany({ ...fields });
+    hide();
+    message.success('Edit successfully');
+    return true;
+  } catch (error) {
+    hide();
+    console.log(error);
+
+    message.error('Editing failed, please try again!');
+    return false;
+  }
+};
+
+const getUserTemplateOptions = async (): Promise<DefaultOptionType[]> => {
+  const users = await userTemplateList({});
+  return users.reduce((accum: DefaultOptionType[], user) => {
+    const option: DefaultOptionType = {
+      value: user?.id,
+      label: `${user?.id} - ${user?.name} ${user?.lastName}`,
+    };
+    return [...accum, option];
+  }, []);
+};
+
 type Props = {
   onFinish: () => void;
 };
 
 const useCompanyForm = ({ onFinish }: Props) => {
-  const _handleSubmitForm = async (value: SicexAPI.CurrentCompany) => {
-    console.log(value);
+  const [userTemplatesList, setUserTemplatesList] = useState<DefaultOptionType[]>([]);
 
-    const success = await _handleAdd(value);
+  const _handleSubmitForm = async (value: SicexAPI.CurrentCompany) => {
+    const { id } = value;
+    const isEditing = id ?? false;
+
+    let success;
+    if (!isEditing) {
+      success = await handleAdd(value);
+    } else {
+      success = await handleEdit(value);
+    }
     if (success) {
-      // onFinish();
+      onFinish();
     }
   };
 
-  const _getUserTemplateOptions = async (): Promise<RequestOptionsType[]> => {
-    const users = await userTemplateList({});
-    return users.reduce((accum: RequestOptionsType[], user) => {
-      const option: RequestOptionsType = {
-        value: user?.id,
-        label: `${user?.id} - ${user?.name} ${user?.lastName}`,
-      };
-      return [...accum, option];
-    }, []);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const users = await getUserTemplateOptions();
+      setUserTemplatesList(users);
+    };
+    fetchData();
+  }, []);
 
-  return { _handleAdd, _handleSubmitForm, _getUserTemplateOptions };
+  return { userTemplatesList, _handleSubmitForm };
 };
 
 export default useCompanyForm;

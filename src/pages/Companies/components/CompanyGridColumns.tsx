@@ -1,31 +1,24 @@
 import { ProColumns } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl } from '@umijs/max';
-import { Input } from 'antd';
+import { FormattedMessage } from '@umijs/max';
 import React from 'react';
+import useCompanies from '../hooks/useCompanies';
 
-type CompanyGridColumnsProps = {
-  columns: ProColumns<SicexAPI.CurrentUser>[];
-};
+const CompanyGridColumns = (): ProColumns<SicexAPI.CurrentCompany>[] => {
+  const { setCurrentRow, setModalOpen } = useCompanies({});
 
-const CompanyGridColumns: React.FC<CompanyGridColumnsProps> = ({}) => {
-  const intl = useIntl();
-
-  const columns: ProColumns<SicexAPI.CurrentUser>[] = [
+  const columns: ProColumns<SicexAPI.CurrentCompany>[] = [
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.updateForm.ruleName.nameLabel"
-          defaultMessage="Rule name"
-        />
-      ),
-      dataIndex: 'name',
-      tip: 'The rule name is the unique key',
+      title: <FormattedMessage id="pages.userGrid.updateForm.companyId" defaultMessage="" />,
+      dataIndex: 'nit',
+      hideInSearch: true,
       render: (dom, entity) => {
         return (
           <a
             onClick={() => {
-              // setCurrentRow(entity);
-              // setShowDetail(true);
+              console.log(entity);
+
+              setCurrentRow(entity);
+              setModalOpen(true);
             }}
           >
             {dom}
@@ -34,115 +27,33 @@ const CompanyGridColumns: React.FC<CompanyGridColumnsProps> = ({}) => {
       },
     },
     {
-      title: <FormattedMessage id="pages.searchTable.titleDesc" defaultMessage="Description" />,
-      dataIndex: 'desc',
-      valueType: 'textarea',
+      title: <FormattedMessage id="pages.userGrid.updateForm.company" defaultMessage="" />,
+      dataIndex: 'name',
     },
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleCallNo"
-          defaultMessage="Number of service calls"
-        />
-      ),
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
+      title: <FormattedMessage id="pages.companyGrid.updateForm.companyUsers" defaultMessage="" />,
+      dataIndex: 'totalUsersCount',
+      hideInSearch: true,
     },
     {
-      title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: (
-            <FormattedMessage
-              id="pages.searchTable.nameStatus.default"
-              defaultMessage="Shut down"
-            />
-          ),
-          status: 'Default',
-        },
-        1: {
-          text: (
-            <FormattedMessage id="pages.searchTable.nameStatus.running" defaultMessage="Running" />
-          ),
-          status: 'Processing',
-        },
-        2: {
-          text: (
-            <FormattedMessage id="pages.searchTable.nameStatus.online" defaultMessage="Online" />
-          ),
-          status: 'Success',
-        },
-        3: {
-          text: (
-            <FormattedMessage
-              id="pages.searchTable.nameStatus.abnormal"
-              defaultMessage="Abnormal"
-            />
-          ),
-          status: 'Error',
-        },
+      title: <FormattedMessage id="pages.companyGrid.updateForm.userTemplate" defaultMessage="" />,
+      dataIndex: ['userTemplate', 'name'],
+      hideInSearch: true,
+      render: (dom, entity) => {
+        return (
+          <>{`${entity.userTemplate?.id ?? ''} - ${entity.userTemplate?.name ?? ''}  ${
+            entity.userTemplate?.lastName ?? ''
+          }`}</>
+        );
       },
     },
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleUpdatedAt"
-          defaultMessage="Last scheduled time"
-        />
-      ),
-      sorter: true,
-      dataIndex: 'updatedAt',
-      valueType: 'dateTime',
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return (
-            <Input
-              {...rest}
-              placeholder={intl.formatMessage({
-                id: 'pages.searchTable.exception',
-                defaultMessage: 'Please enter the reason for the exception!',
-              })}
-            />
-          );
-        }
-        return defaultRender(item);
-      },
-    },
-    {
-      title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="Operating" />,
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            // handleUpdateModalOpen(true);
-            // setCurrentRow(record);
-          }}
-        >
-          <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration" />
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          <FormattedMessage
-            id="pages.searchTable.subscribeAlert"
-            defaultMessage="Subscribe to alerts"
-          />
-        </a>,
-      ],
+      title: <FormattedMessage id="pages.companyGrid.updateForm.allowedIps" defaultMessage="" />,
+      dataIndex: 'allowedIps',
+      hideInSearch: true,
     },
   ];
+
   return columns;
 };
 

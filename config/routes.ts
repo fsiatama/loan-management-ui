@@ -12,8 +12,8 @@
   },
   {
     path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
+    name: 'home',
+    icon: 'home',
     component: './Welcome',
   },
   {
@@ -35,13 +35,13 @@
   },
   {
     name: 'list.users-list',
-    icon: 'table',
+    icon: 'user',
     path: '/users',
     component: './Users',
   },
   {
     name: 'list.companies-list',
-    icon: 'table',
+    icon: 'bank',
     path: '/companies',
     component: './Companies',
   },
