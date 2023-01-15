@@ -69,6 +69,8 @@ export default {
   'pages.userTable.confirmation.delete': '¿Estás seguro de eliminar a estos usuarios?',
   'pages.companyTable.title': 'Empresas',
   'pages.companyTable.confirmation.delete': '¿Estás seguro de eliminar a estas empresas?',
+  'pages.subscriptionTable.title': 'Suscripciones',
+  'pages.subscriptionTable.confirmation.delete': '¿Estás seguro de eliminar a estas suscripciones?',
   'pages.userGrid.createForm.newUser': 'Nuevo Usuario',
   'pages.userGrid.updateForm.user.name': 'Nombre',
   'pages.userGrid.updateForm.user.name.required': 'Nombre es requerido',
@@ -99,4 +101,8 @@ export default {
   'pages.companyGrid.updateForm.userTemplate': 'Plantilla para reportes de los usuarios:',
   'pages.companyGrid.updateForm.companyUsers': 'Total Usuarios',
   'pages.companyGrid.createForm.newCompany': 'Nueva Empresa',
+  'pages.subscriptionGrid.createForm.newSubscription': 'Nueva suscripción',
+  'pages.subscriptionGrid.updateForm.productName': 'Producto',
+  'pages.subscriptionGrid.updateForm.initialDate': 'Fecha inicial',
+  'pages.subscriptionGrid.updateForm.finalDate': 'Fecha final',
 };

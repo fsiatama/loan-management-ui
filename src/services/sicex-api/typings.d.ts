@@ -30,6 +30,31 @@ declare namespace SicexAPI {
     totalUsersCount: number;
   };
 
+  type Product = {
+    id: number;
+    name: string;
+    hasDuration: boolean;
+    hasDeactivateDate: boolean;
+    hasTrades: boolean;
+    hasCountries: boolean;
+    hasPorts: boolean;
+    isActive: boolean;
+  };
+
+  type CurrentSubscription = {
+    id: number;
+    hasImpo: boolean;
+    hasExpo: boolean;
+    canEditReports: boolean;
+    initialDate: string;
+    finalDate: string;
+    months: number;
+    countries: string;
+    ports: string;
+    user: CurrentUser;
+    product: Product;
+  };
+
   type LoginResult = {
     status?: string;
     type?: string;

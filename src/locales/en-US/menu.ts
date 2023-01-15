@@ -24,6 +24,7 @@ export default {
   'menu.list': 'List',
   'menu.list.users-list': 'Users',
   'menu.list.companies-list': 'Companies',
+  'menu.list.subscriptions-list': 'Subscriptions',
   'menu.list.table-list': 'Search Table',
   'menu.list.basic-list': 'Basic List',
   'menu.list.card-list': 'Card List',

@@ -116,6 +116,9 @@ const UsersList: React.FC = () => {
           labelWidth: 1,
           filterType: 'query',
         }}
+        options={{
+          density: false,
+        }}
         toolBarRender={() => [
           <Button
             type="primary"

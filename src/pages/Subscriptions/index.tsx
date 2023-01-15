@@ -1,15 +1,15 @@
 import React from 'react';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { Button, List, Modal } from 'antd';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, List, Modal } from 'antd';
-import { companyList } from '@/services/sicex-api/companies/api';
-import useCompanies from './hooks/useCompanies';
-import CompanyForm from './components/CompanyForm';
+import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { subscriptionsList } from '@/services/sicex-api/subscriptions/api';
+import useSubscriptions from './hooks/useSubscriptions';
+import SubscriptionForm from './components/SubscriptionForm';
 
 const { confirm } = Modal;
 
-const CompaniesList: React.FC = () => {
+const UsersList: React.FC = () => {
   const intl = useIntl();
   const {
     selectedRows,
@@ -22,19 +22,24 @@ const CompaniesList: React.FC = () => {
     _handleOnLoad,
     _handleCancelModal,
     _handleRemove,
-  } = useCompanies();
+  } = useSubscriptions();
 
-  const columns: ProColumns<SicexAPI.CurrentCompany>[] = [
+  const columns: ProColumns<SicexAPI.CurrentSubscription>[] = [
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.companyId" defaultMessage="" />,
-      dataIndex: 'nit',
+      title: '',
+      dataIndex: 'id',
+      hideInTable: true,
+    },
+    {
+      title: (
+        <FormattedMessage id="pages.subscriptionGrid.updateForm.productName" defaultMessage="" />
+      ),
       hideInSearch: true,
+      dataIndex: ['product', 'name'],
       render: (dom, entity) => {
         return (
           <a
             onClick={() => {
-              console.log(entity);
-
               setCurrentRow(entity);
               setModalOpen(true);
             }}
@@ -45,42 +50,55 @@ const CompaniesList: React.FC = () => {
       },
     },
     {
+      title: (
+        <FormattedMessage id="pages.subscriptionGrid.updateForm.initialDate" defaultMessage="" />
+      ),
+      key: 'initDate',
+      dataIndex: 'initialDate',
+      valueType: 'date',
+      hideInSearch: true,
+    },
+    {
+      title: (
+        <FormattedMessage id="pages.subscriptionGrid.updateForm.finalDate" defaultMessage="" />
+      ),
+      key: 'endDate',
+      dataIndex: 'finalDate',
+      valueType: 'date',
+      hideInSearch: true,
+    },
+    {
+      title: <FormattedMessage id="pages.userGrid.updateForm.user.username" defaultMessage="" />,
+      dataIndex: ['user', 'username'],
+      copyable: true,
+      hideInSearch: true,
+    },
+    {
       title: <FormattedMessage id="pages.userGrid.updateForm.company" defaultMessage="" />,
-      dataIndex: 'name',
-      ellipsis: true,
-      width: 260,
+      dataIndex: ['user', 'company', 'name'],
+      copyable: true,
+      hideInSearch: true,
     },
     {
-      title: <FormattedMessage id="pages.companyGrid.updateForm.companyUsers" defaultMessage="" />,
-      dataIndex: 'totalUsersCount',
-      hideInSearch: true,
-      align: 'center',
-    },
-    {
-      title: <FormattedMessage id="pages.companyGrid.updateForm.userTemplate" defaultMessage="" />,
-      dataIndex: ['userTemplate', 'name'],
-      hideInSearch: true,
-      render: (dom, entity) => {
-        return (
-          <>{`${entity.userTemplate?.id ?? ''} - ${entity.userTemplate?.name ?? ''}  ${
-            entity.userTemplate?.lastName ?? ''
-          }`}</>
-        );
+      title: '',
+      dataIndex: 'created_at',
+      valueType: 'dateRange',
+      hideInTable: true,
+      search: {
+        transform: (value) => {
+          return {
+            initialDate: value[0],
+            finalDate: value[1],
+          };
+        },
       },
-      ellipsis: true,
-    },
-    {
-      title: <FormattedMessage id="pages.companyGrid.updateForm.allowedIps" defaultMessage="" />,
-      dataIndex: 'allowedIps',
-      hideInSearch: true,
-      ellipsis: true,
     },
   ];
 
   const showDeleteConfirm = () => {
     confirm({
       title: intl.formatMessage({
-        id: 'pages.companyTable.confirmation.delete',
+        id: 'pages.subscriptionTable.confirmation.delete',
         defaultMessage: '',
       }),
       icon: <ExclamationCircleFilled />,
@@ -89,10 +107,11 @@ const CompaniesList: React.FC = () => {
           <>
             <List
               size="small"
+              bordered={true}
               dataSource={selectedRows}
-              renderItem={(company) => (
+              renderItem={(user) => (
                 <List.Item>
-                  <List.Item.Meta avatar={company.nit} description={company.name} />
+                  <List.Item.Meta avatar={user.id} description={`${user.product.name}`} />
                 </List.Item>
               )}
             />
@@ -108,9 +127,9 @@ const CompaniesList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<SicexAPI.CurrentCompany, API.PageParams>
+      <ProTable<SicexAPI.CurrentSubscription, API.PageParams>
         headerTitle={intl.formatMessage({
-          id: 'pages.companyTable.title',
+          id: 'pages.subscriptionTable.title',
           defaultMessage: '',
         })}
         actionRef={actionRef}
@@ -134,7 +153,7 @@ const CompaniesList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={companyList}
+        request={subscriptionsList}
         onLoad={_handleOnLoad}
         columns={columns}
         size="small"
@@ -159,7 +178,7 @@ const CompaniesList: React.FC = () => {
           </Button>
         </FooterToolbar>
       )}
-      <CompanyForm
+      <SubscriptionForm
         onCancel={_handleCancelModal}
         formModalOpen={modalOpen}
         values={currentRow}
@@ -174,4 +193,4 @@ const CompaniesList: React.FC = () => {
   );
 };
 
-export default CompaniesList;
+export default UsersList;

@@ -46,6 +46,12 @@
     component: './Companies',
   },
   {
+    name: 'list.subscriptions-list',
+    icon: 'creditCard',
+    path: '/subscriptions',
+    component: './Subscriptions',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },
