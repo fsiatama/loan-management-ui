@@ -14,9 +14,10 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '',
+  title: 'Blue Phoenix LLC',
+  siderMenuType: 'sub',
   pwa: false,
-  logo: 'https://application.sicex.com/img/logo2018.svg',
+  logo: 'https://carlosplazasmortgage.com/images/bluephoenix.png',
   iconfontUrl: '',
 };
 

@@ -66,7 +66,7 @@ export default defineConfig({
    * @name layout
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Sicex Admin',
+  title: 'Blue Phoenix LLC',
   layout: {
     locale: true,
     ...defaultSettings,

@@ -2,7 +2,7 @@
  * loading 占位
  * 
  */
- (function () {
+(function () {
   const _root = document.querySelector('#root');
   if (_root && _root.innerHTML === '') {
     _root.innerHTML = `
@@ -191,7 +191,7 @@
           </div>
         </div>
         <div class="loading-title">
-          Sicex
+          Blue Phoenix LLC
         </div>
         <div class="loading-sub-title">
           Loading....

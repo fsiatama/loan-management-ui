@@ -3,11 +3,11 @@ import { login } from '@/services/sicex-api/auth/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
-import { Alert, message } from 'antd';
-import Settings from '../../../../config/defaultSettings';
+import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
+import { Alert, message, Row } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
+import Settings from '../../../../config/defaultSettings';
 
 import styles from './index.less';
 
@@ -56,10 +56,12 @@ const Login: React.FC = () => {
     return {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: '100%',
       overflow: 'auto',
       backgroundColor: '#e6fffb',
       backgroundSize: '100% 100%',
+      alignItems: 'center',
+      justifyContent: 'center',
     };
   });
 
@@ -118,13 +120,6 @@ const Login: React.FC = () => {
       <Lang />
       <div className={styles.content}>
         <LoginForm
-          contentStyle={{
-            minWidth: 280,
-            justifyContent: 'center',
-            maxWidth: '75vw',
-          }}
-          //logo={<img alt="logo" src="/logo.svg" />}
-          title={<img width={260} alt="logo" src="/logo.svg" />}
           subTitle=" "
           initialValues={{
             autoLogin: true,
@@ -142,6 +137,9 @@ const Login: React.FC = () => {
             />
           )}
           <>
+            <Row justify="center" align="top">
+              <img width={260} alt="logo" src="/logo.png" />
+            </Row>
             <ProFormText
               name="username"
               fieldProps={{

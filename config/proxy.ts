@@ -11,7 +11,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://localhost:3001',
+      target: 'http://localhost:3000',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
@@ -21,7 +21,7 @@ export default {
   test: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/api/': {
-      target: 'http://localhost:3001',
+      target: 'http://localhost:3000',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },

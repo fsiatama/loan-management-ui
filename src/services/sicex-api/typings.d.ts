@@ -3,20 +3,13 @@ declare namespace SicexAPI {
   type CurrentUser = {
     access: string;
     id: number;
-    langId: number;
-    city: string;
     phone: string;
-    name: string;
+    firstName: string;
     lastName: string;
     username: string;
     email: string;
     isRoot: boolean;
     isActive: boolean;
-    canRenovate: boolean;
-    canDownload: boolean;
-    useMfa: boolean;
-    isTemplate: boolean;
-    company: CurrentCompany;
   };
 
   type CurrentCompany = {
