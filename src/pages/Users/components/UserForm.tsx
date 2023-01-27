@@ -1,5 +1,3 @@
-import React from 'react';
-import { Col, Input, Row } from 'antd';
 import {
   ModalForm,
   ProFormSegmented,
@@ -8,15 +6,17 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
+import { Col, Input, Row } from 'antd';
+import React from 'react';
 import useUserForm from '../hooks/useUserForm';
 
-export type FormValueType = Partial<SicexAPI.CurrentUser>;
+export type FormValueType = Partial<API.CurrentUser>;
 
 export type UserFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onFinish: () => void;
   formModalOpen: boolean;
-  values: SicexAPI.CurrentUser | undefined;
+  values: API.CurrentUser | undefined;
 };
 
 const UserForm: React.FC<UserFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {

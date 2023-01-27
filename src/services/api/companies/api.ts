@@ -10,8 +10,8 @@ export const companyList = async (
     pageSize?: number;
   },
   options?: { [key: string]: any },
-): Promise<SicexAPI.CompanyList> => {
-  return request<SicexAPI.CompanyList>('/api/companies', {
+): Promise<API.CompanyList> => {
+  return request<API.CompanyList>('/api/companies', {
     method: 'GET',
     params: {
       ...params,
@@ -22,10 +22,10 @@ export const companyList = async (
 
 /** POST /api/companies */
 export const addCompany = async (
-  body: SicexAPI.CurrentCompany,
+  body: API.CurrentCompany,
   options?: { [key: string]: any },
-): Promise<SicexAPI.CurrentCompany> => {
-  return request<SicexAPI.CurrentCompany>('/api/companies', {
+): Promise<API.CurrentCompany> => {
+  return request<API.CurrentCompany>('/api/companies', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,8 +39,8 @@ export const addCompany = async (
 export const companiesNameList = async (
   params: {},
   options?: { [key: string]: any },
-): Promise<SicexAPI.CompaniesNameList> => {
-  return request<SicexAPI.CompaniesNameList>('/api/companies/names', {
+): Promise<API.CompaniesNameList> => {
+  return request<API.CompaniesNameList>('/api/companies/names', {
     method: 'GET',
     params: {
       ...params,
@@ -51,11 +51,11 @@ export const companiesNameList = async (
 
 /** PATCH /api/companies */
 export const editCompany = async (
-  body: Partial<SicexAPI.CurrentCompany>,
+  body: Partial<API.CurrentCompany>,
   options?: { [key: string]: any },
-): Promise<SicexAPI.CurrentCompany> => {
+): Promise<API.CurrentCompany> => {
   const { id, ...rest } = body;
-  return request<SicexAPI.CurrentCompany>(`/api/companies/${id}`, {
+  return request<API.CurrentCompany>(`/api/companies/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

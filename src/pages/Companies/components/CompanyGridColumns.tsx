@@ -1,12 +1,11 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { FormattedMessage } from '@umijs/max';
-import React from 'react';
 import useCompanies from '../hooks/useCompanies';
 
-const CompanyGridColumns = (): ProColumns<SicexAPI.CurrentCompany>[] => {
+const CompanyGridColumns = (): ProColumns<API.CurrentCompany>[] => {
   const { setCurrentRow, setModalOpen } = useCompanies({});
 
-  const columns: ProColumns<SicexAPI.CurrentCompany>[] = [
+  const columns: ProColumns<API.CurrentCompany>[] = [
     {
       title: <FormattedMessage id="pages.userGrid.updateForm.companyId" defaultMessage="" />,
       dataIndex: 'nit',

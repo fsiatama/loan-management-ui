@@ -1,11 +1,11 @@
-import React from 'react';
+import { companyList } from '@/services/api/companies/api';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, List, Modal } from 'antd';
-import { companyList } from '@/services/sicex-api/companies/api';
-import useCompanies from './hooks/useCompanies';
+import React from 'react';
 import CompanyForm from './components/CompanyForm';
+import useCompanies from './hooks/useCompanies';
 
 const { confirm } = Modal;
 
@@ -24,7 +24,7 @@ const CompaniesList: React.FC = () => {
     _handleRemove,
   } = useCompanies();
 
-  const columns: ProColumns<SicexAPI.CurrentCompany>[] = [
+  const columns: ProColumns<API.CurrentCompany>[] = [
     {
       title: <FormattedMessage id="pages.userGrid.updateForm.companyId" defaultMessage="" />,
       dataIndex: 'nit',
@@ -108,7 +108,7 @@ const CompaniesList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<SicexAPI.CurrentCompany, API.PageParams>
+      <ProTable<API.CurrentCompany, API.PageParams>
         headerTitle={intl.formatMessage({
           id: 'pages.companyTable.title',
           defaultMessage: '',

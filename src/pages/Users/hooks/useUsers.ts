@@ -1,9 +1,9 @@
-import { useCallback, useRef, useState } from 'react';
-import { message } from 'antd';
+import { removeUsers } from '@/services/api/users/api';
 import { ActionType } from '@ant-design/pro-components';
-import { removeUsers } from '@/services/sicex-api/users/api';
+import { message } from 'antd';
+import { useCallback, useRef, useState } from 'react';
 
-const handleRemove = async (users: Partial<SicexAPI.CurrentUser>[]) => {
+const handleRemove = async (users: Partial<API.CurrentUser>[]) => {
   const hide = message.loading('Loading');
   if (users.length <= 0) return true;
   try {
@@ -23,8 +23,8 @@ const handleRemove = async (users: Partial<SicexAPI.CurrentUser>[]) => {
 const useUsers = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<SicexAPI.CurrentUser>();
-  const [selectedRows, setSelectedRows] = useState<SicexAPI.CurrentUser[]>([]);
+  const [currentRow, setCurrentRow] = useState<API.CurrentUser>();
+  const [selectedRows, setSelectedRows] = useState<API.CurrentUser[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const onClick = useCallback((): void => {}, []);
@@ -40,7 +40,7 @@ const useUsers = () => {
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: (newSelectedRowKeys: React.Key[], selectedRows: SicexAPI.CurrentUser[]) => {
+    onChange: (newSelectedRowKeys: React.Key[], selectedRows: API.CurrentUser[]) => {
       setSelectedRows(selectedRows);
       setSelectedRowKeys(newSelectedRowKeys);
     },

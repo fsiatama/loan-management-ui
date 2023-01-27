@@ -10,8 +10,8 @@ export const subscriptionsList = async (
     pageSize?: number;
   },
   options?: { [key: string]: any },
-): Promise<SicexAPI.CurrentSubscription> => {
-  return request<SicexAPI.CurrentSubscription>('/api/subscriptions', {
+): Promise<API.CurrentSubscription> => {
+  return request<API.CurrentSubscription>('/api/subscriptions', {
     method: 'GET',
     params: {
       ...params,
@@ -24,8 +24,8 @@ export const subscriptionsList = async (
 export const userTemplateList = async (
   params: {},
   options?: { [key: string]: any },
-): Promise<SicexAPI.UserTemplateList> => {
-  return request<SicexAPI.UserTemplateList>('/api/users/templates', {
+): Promise<API.UserTemplateList> => {
+  return request<API.UserTemplateList>('/api/users/templates', {
     method: 'GET',
     params: {
       ...params,
@@ -36,10 +36,10 @@ export const userTemplateList = async (
 
 /** POST /api/users */
 export const addUser = async (
-  body: Partial<SicexAPI.CurrentUser>,
+  body: Partial<API.CurrentUser>,
   options?: { [key: string]: any },
-): Promise<SicexAPI.CurrentUser> => {
-  return request<SicexAPI.CurrentUser>('/api/users', {
+): Promise<API.CurrentUser> => {
+  return request<API.CurrentUser>('/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,11 +51,11 @@ export const addUser = async (
 
 /** PATCH /api/users */
 export const editUser = async (
-  body: Partial<SicexAPI.CurrentUser>,
+  body: Partial<API.CurrentUser>,
   options?: { [key: string]: any },
-): Promise<SicexAPI.CurrentUser> => {
+): Promise<API.CurrentUser> => {
   const { id, ...rest } = body;
-  return request<SicexAPI.CurrentUser>(`/api/users/${id}`, {
+  return request<API.CurrentUser>(`/api/users/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

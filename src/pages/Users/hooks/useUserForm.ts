@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
+import { useEffect, useState } from 'react';
 
-import { addUser, editUser } from '@/services/sicex-api/users/api';
-import { companiesNameList } from '@/services/sicex-api/companies/api';
+import { companiesNameList } from '@/services/api/companies/api';
+import { addUser, editUser } from '@/services/api/users/api';
 
-const handleAdd = async (fields: Partial<SicexAPI.CurrentUser>) => {
+const handleAdd = async (fields: Partial<API.CurrentUser>) => {
   const hide = message.loading('Loading');
   try {
     await addUser({ ...fields });
@@ -19,7 +19,7 @@ const handleAdd = async (fields: Partial<SicexAPI.CurrentUser>) => {
   }
 };
 
-const handleEdit = async (fields: Partial<SicexAPI.CurrentUser>) => {
+const handleEdit = async (fields: Partial<API.CurrentUser>) => {
   const hide = message.loading('Loading');
   try {
     await editUser({ ...fields });
@@ -55,10 +55,10 @@ type Props = {
 
 const useUserForm = ({ onFinish }: Props) => {
   const [companiesNamesList, setCompaniesNamesList] = useState<DefaultOptionType[]>([]);
-  const _handleSubmitForm = async (value: SicexAPI.CurrentUser) => {
+  const _handleSubmitForm = async (value: API.CurrentUser) => {
     const { id } = value;
     const isEditing = id ?? false;
-    const rowValues: SicexAPI.CurrentUser = {
+    const rowValues: API.CurrentUser = {
       ...value,
       isActive: !!value.isActive,
       useMfa: !!value.useMfa,

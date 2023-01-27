@@ -1,16 +1,16 @@
-import React from 'react';
-import { Col, Input, Row } from 'antd';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
+import { Col, Input, Row } from 'antd';
+import React from 'react';
 import useCompanyForm from '../hooks/useCompanyForm';
 
-export type FormValueType = Partial<SicexAPI.CurrentCompany>;
+export type FormValueType = Partial<API.CurrentCompany>;
 
 export type CompanyFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onFinish: () => void;
   formModalOpen: boolean;
-  values: SicexAPI.CurrentCompany | undefined;
+  values: API.CurrentCompany | undefined;
 };
 
 const CompanyForm: React.FC<CompanyFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Button, List, Modal } from 'antd';
+import { subscriptionsList } from '@/services/api/subscriptions/api';
+import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
-import { subscriptionsList } from '@/services/sicex-api/subscriptions/api';
-import useSubscriptions from './hooks/useSubscriptions';
+import { Button, List, Modal } from 'antd';
+import React from 'react';
 import SubscriptionForm from './components/SubscriptionForm';
+import useSubscriptions from './hooks/useSubscriptions';
 
 const { confirm } = Modal;
 
@@ -24,7 +24,7 @@ const UsersList: React.FC = () => {
     _handleRemove,
   } = useSubscriptions();
 
-  const columns: ProColumns<SicexAPI.CurrentSubscription>[] = [
+  const columns: ProColumns<API.CurrentSubscription>[] = [
     {
       title: '',
       dataIndex: 'id',
@@ -127,7 +127,7 @@ const UsersList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<SicexAPI.CurrentSubscription, API.PageParams>
+      <ProTable<API.CurrentSubscription, API.PageParams>
         headerTitle={intl.formatMessage({
           id: 'pages.subscriptionTable.title',
           defaultMessage: '',

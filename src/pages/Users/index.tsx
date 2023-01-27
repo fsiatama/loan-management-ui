@@ -1,11 +1,11 @@
-import React from 'react';
-import { Button, List, Modal } from 'antd';
+import { userList } from '@/services/api/users/api';
+import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
-import { userList } from '@/services/sicex-api/users/api';
-import useUsers from './hooks/useUsers';
+import { Button, List, Modal } from 'antd';
+import React from 'react';
 import UserForm from './components/UserForm';
+import useUsers from './hooks/useUsers';
 
 const { confirm } = Modal;
 
@@ -24,7 +24,7 @@ const UsersList: React.FC = () => {
     _handleRemove,
   } = useUsers();
 
-  const columns: ProColumns<SicexAPI.CurrentUser>[] = [
+  const columns: ProColumns<API.CurrentUser>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -105,7 +105,7 @@ const UsersList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<SicexAPI.CurrentUser, API.PageParams>
+      <ProTable<API.CurrentUser, API.PageParams>
         headerTitle={intl.formatMessage({
           id: 'pages.userTable.title',
           defaultMessage: '',

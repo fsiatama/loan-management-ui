@@ -1,4 +1,4 @@
-declare namespace SicexAPI {
+declare namespace API {
   type ResponseError = { response: { data: { message: string } } };
   type CurrentUser = {
     access: string;

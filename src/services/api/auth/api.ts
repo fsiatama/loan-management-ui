@@ -3,8 +3,8 @@
 import { request } from '@umijs/max';
 
 /** POST /api/auth/login */
-export async function login(body: SicexAPI.LoginParams, options?: { [key: string]: any }) {
-  return request<SicexAPI.LoginResult>('/api/auth/login', {
+export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
+  return request<API.LoginResult>('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

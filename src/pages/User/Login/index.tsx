@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/sicex-api/auth/api';
+import { login } from '@/services/api/auth/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
@@ -49,7 +49,7 @@ const LoginMessage: React.FC<{
 };
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<SicexAPI.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const containerClassName = useEmotionCss(() => {
@@ -67,7 +67,7 @@ const Login: React.FC = () => {
 
   const intl = useIntl();
 
-  const fetchUserInfo = async (msg: SicexAPI.LoginResult) => {
+  const fetchUserInfo = async (msg: API.LoginResult) => {
     const userInfo = msg?.user;
     if (userInfo) {
       flushSync(() => {
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (values: SicexAPI.LoginParams) => {
+  const handleSubmit = async (values: API.LoginParams) => {
     try {
       const msg = await login({ ...values });
       if (msg.status === 'ok') {
@@ -125,7 +125,7 @@ const Login: React.FC = () => {
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            await handleSubmit(values as SicexAPI.LoginParams);
+            await handleSubmit(values as API.LoginParams);
           }}
         >
           {status === 'error' && (

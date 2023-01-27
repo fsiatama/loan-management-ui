@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
+import { useEffect, useState } from 'react';
 
-import { addCompany, editCompany } from '@/services/sicex-api/companies/api';
-import { userTemplateList } from '@/services/sicex-api/users/api';
+import { addCompany, editCompany } from '@/services/api/companies/api';
+import { userTemplateList } from '@/services/api/users/api';
 
-const handleAdd = async (fields: SicexAPI.CurrentCompany) => {
+const handleAdd = async (fields: API.CurrentCompany) => {
   const hide = message.loading('Loading');
   try {
     await addCompany({ ...fields });
@@ -19,7 +19,7 @@ const handleAdd = async (fields: SicexAPI.CurrentCompany) => {
   }
 };
 
-const handleEdit = async (fields: Partial<SicexAPI.CurrentCompany>) => {
+const handleEdit = async (fields: Partial<API.CurrentCompany>) => {
   const hide = message.loading('Loading');
   try {
     await editCompany({ ...fields });
@@ -53,7 +53,7 @@ type Props = {
 const useCompanyForm = ({ onFinish }: Props) => {
   const [userTemplatesList, setUserTemplatesList] = useState<DefaultOptionType[]>([]);
 
-  const _handleSubmitForm = async (value: SicexAPI.CurrentCompany) => {
+  const _handleSubmitForm = async (value: API.CurrentCompany) => {
     const { id } = value;
     const isEditing = id ?? false;
 

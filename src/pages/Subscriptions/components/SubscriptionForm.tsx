@@ -1,5 +1,3 @@
-import React from 'react';
-import { Col, Input, Row } from 'antd';
 import {
   ModalForm,
   ProFormSegmented,
@@ -8,15 +6,17 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
+import { Col, Input, Row } from 'antd';
+import React from 'react';
 import useSubscriptionForm from '../hooks/useSubscriptionForm';
 
-export type FormValueType = Partial<SicexAPI.CurrentSubscription>;
+export type FormValueType = Partial<API.CurrentSubscription>;
 
 export type UserFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onFinish: () => void;
   formModalOpen: boolean;
-  values: SicexAPI.CurrentSubscription | undefined;
+  values: API.CurrentSubscription | undefined;
 };
 
 const UserForm: React.FC<UserFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {
