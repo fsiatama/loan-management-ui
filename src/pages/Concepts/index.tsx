@@ -4,10 +4,12 @@ import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, List, Modal } from 'antd';
 import React from 'react';
-import UserForm from './components/UserForm';
-import useUsers from './hooks/useUsers';
+import PageForm from './components/PageForm';
+import usePage from './hooks/usePage';
 
 const { confirm } = Modal;
+
+type CurrentEntity = API.CurrentBorrower;
 
 const UsersList: React.FC = () => {
   const intl = useIntl();
@@ -22,9 +24,9 @@ const UsersList: React.FC = () => {
     _handleOnLoad,
     _handleCancelModal,
     _handleRemove,
-  } = useUsers();
+  } = usePage();
 
-  const columns: ProColumns<API.CurrentUser>[] = [
+  const columns: ProColumns<CurrentEntity>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -48,7 +50,7 @@ const UsersList: React.FC = () => {
       dataIndex: 'name',
       ellipsis: true,
       render: (dom, entity) => {
-        return <>{`${entity.name}  ${entity.lastName}`}</>;
+        return <>{`${entity.firstName}  ${entity.lastName}`}</>;
       },
     },
     {
@@ -89,7 +91,10 @@ const UsersList: React.FC = () => {
               dataSource={selectedRows}
               renderItem={(user) => (
                 <List.Item>
-                  <List.Item.Meta avatar={user.id} description={`${user.name} ${user.lastName}`} />
+                  <List.Item.Meta
+                    avatar={user.id}
+                    description={`${user.firstName} ${user.lastName}`}
+                  />
                 </List.Item>
               )}
             />
@@ -105,7 +110,7 @@ const UsersList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.CurrentUser, API.PageParams>
+      <ProTable<CurrentEntity, API.PageParams>
         headerTitle={intl.formatMessage({
           id: 'pages.userTable.title',
           defaultMessage: '',
@@ -156,7 +161,7 @@ const UsersList: React.FC = () => {
           </Button>
         </FooterToolbar>
       )}
-      <UserForm
+      <PageForm
         onCancel={_handleCancelModal}
         formModalOpen={modalOpen}
         values={currentRow}

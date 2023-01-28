@@ -1,11 +1,13 @@
 import { message } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { companiesNameList } from '@/services/api/companies/api';
 import { addUser, editUser } from '@/services/api/users/api';
 
-const handleAdd = async (fields: Partial<API.CurrentUser>) => {
+type CurrentEntity = API.CurrentBorrower;
+
+const handleAdd = async (fields: Partial<CurrentEntity>) => {
   const hide = message.loading('Loading');
   try {
     await addUser({ ...fields });
@@ -19,7 +21,7 @@ const handleAdd = async (fields: Partial<API.CurrentUser>) => {
   }
 };
 
-const handleEdit = async (fields: Partial<API.CurrentUser>) => {
+const handleEdit = async (fields: Partial<CurrentEntity>) => {
   const hide = message.loading('Loading');
   try {
     await editUser({ ...fields });
@@ -53,19 +55,14 @@ type Props = {
   onFinish: () => void;
 };
 
-const useUserForm = ({ onFinish }: Props) => {
+const usePageForm = ({ onFinish }: Props) => {
   const [companiesNamesList, setCompaniesNamesList] = useState<DefaultOptionType[]>([]);
-  const _handleSubmitForm = async (value: API.CurrentUser) => {
+  const _handleSubmitForm = async (value: CurrentEntity) => {
     const { id } = value;
     const isEditing = id ?? false;
-    const rowValues: API.CurrentUser = {
+    const rowValues: CurrentEntity = {
       ...value,
-      isActive: !!value.isActive,
-      useMfa: !!value.useMfa,
-      isRoot: !!value.isRoot,
-      isTemplate: !!value.isTemplate,
-      canDownload: !!value.canDownload,
-      canRenovate: !!value.canRenovate,
+      //isActive: !!value.isActive,
     };
     let success;
     if (!isEditing) {
@@ -78,6 +75,7 @@ const useUserForm = ({ onFinish }: Props) => {
     }
   };
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       const companies = await getUserCompanyOptions();
@@ -85,8 +83,9 @@ const useUserForm = ({ onFinish }: Props) => {
     };
     fetchData();
   }, []);
+  */
 
   return { companiesNamesList, _handleSubmitForm };
 };
 
-export default useUserForm;
+export default usePageForm;

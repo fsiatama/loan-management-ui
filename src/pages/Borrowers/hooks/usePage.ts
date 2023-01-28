@@ -3,7 +3,9 @@ import { ActionType } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { useCallback, useRef, useState } from 'react';
 
-const handleRemove = async (users: Partial<API.CurrentUser>[]) => {
+type CurrentEntity = API.CurrentBorrower;
+
+const handleRemove = async (users: Partial<CurrentEntity>[]) => {
   const hide = message.loading('Loading');
   if (users.length <= 0) return true;
   try {
@@ -20,11 +22,11 @@ const handleRemove = async (users: Partial<API.CurrentUser>[]) => {
   }
 };
 
-const useUsers = () => {
+const usePage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<API.CurrentUser>();
-  const [selectedRows, setSelectedRows] = useState<API.CurrentUser[]>([]);
+  const [currentRow, setCurrentRow] = useState<CurrentEntity>();
+  const [selectedRows, setSelectedRows] = useState<CurrentEntity[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const onClick = useCallback((): void => {}, []);
@@ -40,7 +42,7 @@ const useUsers = () => {
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: (newSelectedRowKeys: React.Key[], selectedRows: API.CurrentUser[]) => {
+    onChange: (newSelectedRowKeys: React.Key[], selectedRows: CurrentEntity[]) => {
       setSelectedRows(selectedRows);
       setSelectedRowKeys(newSelectedRowKeys);
     },
@@ -70,4 +72,4 @@ const useUsers = () => {
   };
 };
 
-export default useUsers;
+export default usePage;

@@ -8,20 +8,22 @@ import {
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Col, Input, Row } from 'antd';
 import React from 'react';
-import useUserForm from '../hooks/useUserForm';
+import usePageForm from '../hooks/usePageForm';
 
-export type FormValueType = Partial<API.CurrentUser>;
+type CurrentEntity = API.CurrentBorrower;
 
-export type UserFormProps = {
+export type FormValueType = Partial<CurrentEntity>;
+
+export type PageFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onFinish: () => void;
   formModalOpen: boolean;
-  values: API.CurrentUser | undefined;
+  values: CurrentEntity | undefined;
 };
 
-const UserForm: React.FC<UserFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {
+const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {
   const intl = useIntl();
-  const { _handleSubmitForm, companiesNamesList } = useUserForm({ onFinish });
+  const { _handleSubmitForm, companiesNamesList } = usePageForm({ onFinish });
   return (
     <ModalForm
       title={intl.formatMessage({
@@ -219,4 +221,4 @@ const UserForm: React.FC<UserFormProps> = ({ formModalOpen, values, onCancel, on
   );
 };
 
-export default UserForm;
+export default PageForm;

@@ -19,7 +19,7 @@ export const userList = async (
   },
   options?: { [key: string]: any },
 ): Promise<API.UserList> => {
-  return request<API.UserList>('/api/users', {
+  return request<API.UserList>('/api/borrowers', {
     method: 'GET',
     params: {
       ...params,
@@ -33,7 +33,7 @@ export const userTemplateList = async (
   params: {},
   options?: { [key: string]: any },
 ): Promise<API.UserTemplateList> => {
-  return request<API.UserTemplateList>('/api/users/templates', {
+  return request<API.UserTemplateList>('/api/borrowers/templates', {
     method: 'GET',
     params: {
       ...params,
@@ -42,12 +42,12 @@ export const userTemplateList = async (
   });
 };
 
-/** POST /api/users */
+/** POST /api/borrowers */
 export const addUser = async (
   body: Partial<API.CurrentUser>,
   options?: { [key: string]: any },
 ): Promise<API.CurrentUser> => {
-  return request<API.CurrentUser>('/api/users', {
+  return request<API.CurrentUser>('/api/borrowers', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -57,13 +57,13 @@ export const addUser = async (
   });
 };
 
-/** PATCH /api/users */
+/** PATCH /api/borrowers */
 export const editUser = async (
   body: Partial<API.CurrentUser>,
   options?: { [key: string]: any },
 ): Promise<API.CurrentUser> => {
   const { id, ...rest } = body;
-  return request<API.CurrentUser>(`/api/users/${id}`, {
+  return request<API.CurrentUser>(`/api/borrowers/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const editUser = async (
 
 /** DELETE /api/user */
 export async function removeUsers(body: { key: number[] }, options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/users/batch', {
+  return request<Record<string, any>>('/api/borrowers/batch', {
     method: 'DELETE',
     data: body,
     ...(options || {}),

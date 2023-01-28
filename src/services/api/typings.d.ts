@@ -1,15 +1,28 @@
 declare namespace API {
   type ResponseError = { response: { data: { message: string } } };
-  type CurrentUser = {
-    access: string;
-    id: number;
+
+  type Address = {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
     phone: string;
+    phone2?: string;
+    phone3?: string;
+  };
+
+  type CurrentBorrower = {
+    id: number;
+    email: string;
     firstName: string;
     lastName: string;
-    username: string;
+    address: Address;
+  };
+
+  type CurrentUser = {
+    id: number;
+    name: string;
     email: string;
-    isRoot: boolean;
-    isActive: boolean;
   };
 
   type CurrentCompany = {
@@ -73,4 +86,9 @@ declare namespace API {
     success?: boolean;
   };
   type CompaniesNameList = Partial<CurrentCompany>[];
+
+  type PageParams = {
+    current?: number;
+    pageSize?: number;
+  };
 }

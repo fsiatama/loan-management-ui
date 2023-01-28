@@ -20,7 +20,7 @@ const Name = () => {
 
   const nameClassName = useEmotionCss(({ token }) => {
     return {
-      width: '70px',
+      width: '130px',
       height: '48px',
       overflow: 'hidden',
       lineHeight: '48px',
@@ -32,7 +32,7 @@ const Name = () => {
     };
   });
 
-  return <span className={`${nameClassName} anticon`}>{currentUser?.firstName}</span>;
+  return <span className={`${nameClassName} anticon`}>{currentUser?.name}</span>;
 };
 
 const AvatarLogo = () => {
