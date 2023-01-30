@@ -1,8 +1,8 @@
 import {
   ModalForm,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormSwitch,
+  ProFormDatePicker,
+  ProFormDigit,
+  ProFormMoney,
   ProFormText,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
@@ -10,7 +10,7 @@ import { Col, Input, Row } from 'antd';
 import React from 'react';
 import usePageForm from '../hooks/usePageForm';
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentLoan;
 
 export type FormValueType = Partial<CurrentEntity>;
 
@@ -27,7 +27,7 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
   return (
     <ModalForm
       title={intl.formatMessage({
-        id: 'pages.userGrid.createForm.newUser',
+        id: 'pages.loansGrid.createForm.new',
         defaultMessage: '',
       })}
       width="700px"
@@ -43,176 +43,114 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
       <ProFormText hidden name="id" />
       <Input.Group size="large">
         <Row gutter={8}>
-          <Col span={12}>
-            <ProFormText
+          <Col span={8}>
+            <ProFormMoney
               rules={[
                 {
                   required: true,
-                  message: <FormattedMessage id="pages.userGrid.updateForm.user.name.required" />,
+                  message: <FormattedMessage id="pages.loansGrid.createForm.amount.required" />,
                 },
               ]}
-              name="name"
+              name="amount"
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.name',
+                id: 'pages.loansGrid.createForm.amount',
               })}
+              locale="en-US"
+              min={0}
             />
           </Col>
-          <Col span={12}>
-            <ProFormText
+          <Col span={8}>
+            <ProFormDigit
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.lastName.required" />
-                  ),
+                  message: <FormattedMessage id="pages.loansGrid.createForm.months.required" />,
                 },
               ]}
-              name="lastName"
+              name={['terms', '0', 'months']}
+              fieldProps={{ precision: 0, addonAfter: 'Months' }}
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.lastName',
-              })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <ProFormText
-        rules={[
-          {
-            required: true,
-            message: <FormattedMessage id="pages.userGrid.updateForm.user.email.required" />,
-          },
-        ]}
-        name="email"
-        label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.user.email',
-        })}
-      />
-      <Input.Group size="large">
-        <Row gutter={8}>
-          <Col span={12}>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                  message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.username.required" />
-                  ),
-                },
-              ]}
-              name="username"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.username',
+                id: 'pages.loansGrid.createForm.months',
               })}
               placeholder={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.username',
+                id: 'pages.loansGrid.createForm.months',
               })}
             />
           </Col>
-          <Col span={12}>
-            <ProFormText
+          <Col span={8}>
+            <ProFormDatePicker
+              rules={[
+                {
+                  required: true,
+                  message: <FormattedMessage id="pages.loansGrid.createForm.startDate.required" />,
+                },
+              ]}
+              name="startDate"
+              label={intl.formatMessage({
+                id: 'pages.loansGrid.createForm.startDate',
+              })}
+            />
+          </Col>
+        </Row>
+      </Input.Group>
+
+      <Input.Group size="large">
+        <Row gutter={8}>
+          <Col span={8}>
+            <ProFormDigit
               rules={[
                 {
                   required: true,
                   message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.password.required" />
+                    <FormattedMessage id="pages.loansGrid.createForm.annualInterestRate.required" />
                   ),
                 },
               ]}
-              name="password"
+              name={['terms', '0', 'annualInterestRate']}
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.password',
+                id: 'pages.loansGrid.createForm.annualInterestRate',
               })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <ProFormSegmented
-        name="langId"
-        bordered
-        label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.user.lang',
-        })}
-        request={async () => [
-          {
-            label: intl.formatMessage({
-              id: 'pages.userGrid.updateForm.user.lang.ES',
-            }),
-            value: 1,
-          },
-          {
-            label: intl.formatMessage({
-              id: 'pages.userGrid.updateForm.user.lang.EN',
-            }),
-            value: 4,
-          },
-        ]}
-      />
-      <ProFormSelect
-        name={['company', 'id']}
-        showSearch
-        label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.company',
-        })}
-        options={companiesNamesList}
-        rules={[
-          {
-            required: true,
-            message: <FormattedMessage id="pages.userGrid.updateForm.company.required" />,
-          },
-        ]}
-      />
-      <Input.Group size="large">
-        <Row justify="space-evenly" style={{ padding: '0 1rem' }}>
-          <Col span={8}>
-            <ProFormSwitch
-              name="isRoot"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isRoot',
-              })}
+              fieldProps={{ precision: 2, addonAfter: '%' }}
+              min={1}
+              max={100}
             />
           </Col>
           <Col span={8}>
-            <ProFormSwitch
-              name="isActive"
+            <ProFormMoney
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <FormattedMessage id="pages.loansGrid.createForm.latePaymentFee.required" />
+                  ),
+                },
+              ]}
+              name={['terms', '0', 'latePaymentFee']}
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isActive',
+                id: 'pages.loansGrid.createForm.latePaymentFee',
               })}
+              locale="en-US"
+              min={0}
             />
           </Col>
           <Col span={8}>
-            <ProFormSwitch
-              name="isTemplate"
+            <ProFormDigit
+              rules={[
+                {
+                  required: true,
+                  message: <FormattedMessage id="pages.loansGrid.createForm.cutOffDay.required" />,
+                },
+              ]}
+              name={['terms', '0', 'cutOffDay']}
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isTemplate',
+                id: 'pages.loansGrid.createForm.cutOffDay',
               })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <Input.Group size="large">
-        <Row justify="space-evenly" style={{ padding: '0 1rem' }}>
-          <Col span={8}>
-            <ProFormSwitch
-              name="canDownload"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.canDownload',
+              placeholder={intl.formatMessage({
+                id: 'pages.loansGrid.createForm.cutOffDay',
               })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="canRenovate"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.canRenovate',
-              })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="useMfa"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.useMfa',
-              })}
+              fieldProps={{ precision: 0 }}
+              min={1}
+              max={31}
             />
           </Col>
         </Row>

@@ -1,16 +1,16 @@
-import { removeUsers } from '@/services/api/users/api';
+import { removeLoans } from '@/services/api/loans/api';
 import { ActionType } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { useCallback, useRef, useState } from 'react';
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentLoan;
 
-const handleRemove = async (users: Partial<CurrentEntity>[]) => {
+const handleRemove = async (loans: Partial<CurrentEntity>[]) => {
   const hide = message.loading('Loading');
-  if (users.length <= 0) return true;
+  if (loans.length <= 0) return true;
   try {
-    await removeUsers({
-      key: users.map((row) => row?.id ?? -1),
+    await removeLoans({
+      key: loans.map((row) => row?.id ?? '00000'),
     });
     hide();
     message.success('Deleted successfully and will refresh soon');
@@ -24,6 +24,7 @@ const handleRemove = async (users: Partial<CurrentEntity>[]) => {
 
 const usePage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<CurrentEntity>();
   const [selectedRows, setSelectedRows] = useState<CurrentEntity[]>([]);
@@ -65,6 +66,8 @@ const usePage = () => {
     setModalOpen,
     currentRow,
     setCurrentRow,
+    drawerOpen,
+    setDrawerOpen,
     onClick,
     _handleOnLoad,
     _handleCancelModal,

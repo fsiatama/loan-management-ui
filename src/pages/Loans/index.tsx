@@ -1,15 +1,16 @@
-import { userList } from '@/services/api/users/api';
+import { loanList } from '@/services/api/loans/api';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, List, Modal } from 'antd';
 import React from 'react';
 import PageForm from './components/PageForm';
+import ProjectionDrawer from './components/ProjectionDrawer';
 import usePage from './hooks/usePage';
 
 const { confirm } = Modal;
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentLoan;
 
 const UsersList: React.FC = () => {
   const intl = useIntl();
@@ -20,6 +21,8 @@ const UsersList: React.FC = () => {
     modalOpen,
     setModalOpen,
     currentRow,
+    drawerOpen,
+    setDrawerOpen,
     setCurrentRow,
     _handleOnLoad,
     _handleCancelModal,
@@ -28,49 +31,75 @@ const UsersList: React.FC = () => {
 
   const columns: ProColumns<CurrentEntity>[] = [
     {
-      title: 'ID',
-      dataIndex: 'id',
+      title: <FormattedMessage id="pages.table.options.title" defaultMessage="" />,
       hideInSearch: true,
-      width: 66,
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setModalOpen(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      key: 'option',
+      width: 120,
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (dom, entity) => [
+        <a
+          key={'edit-row'}
+          onClick={() => {
+            setCurrentRow(entity);
+            setModalOpen(true);
+          }}
+        >
+          <FormattedMessage id="pages.table.options.edit" defaultMessage="" />,
+        </a>,
+        <a
+          key={'projection-row'}
+          onClick={() => {
+            setCurrentRow(entity);
+            setDrawerOpen(true);
+          }}
+        >
+          <FormattedMessage id="pages.table.options.projection" defaultMessage="" />,
+        </a>,
+      ],
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.name" defaultMessage="" />,
-      dataIndex: 'name',
+      title: <FormattedMessage id="pages.loansGrid.createForm.borrower1" defaultMessage="" />,
+      dataIndex: ['borrower1', 'firstName'],
       ellipsis: true,
       render: (dom, entity) => {
-        return <>{`${entity.firstName}  ${entity.lastName}`}</>;
+        const name = entity?.borrower1
+          ? `${entity?.borrower1.firstName}  ${entity?.borrower1.lastName}`
+          : '';
+        return <>{name}</>;
       },
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.username" defaultMessage="" />,
-      dataIndex: 'username',
-      copyable: true,
+      title: <FormattedMessage id="pages.loansGrid.createForm.startDate" defaultMessage="" />,
+      dataIndex: 'startDate',
+      valueType: 'date',
       hideInSearch: true,
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.email" defaultMessage="" />,
-      dataIndex: 'email',
-      copyable: true,
+      title: <FormattedMessage id="pages.loansGrid.createForm.amount" defaultMessage="" />,
+      dataIndex: 'amount',
       hideInSearch: true,
+      valueType: (item) => ({
+        type: 'money',
+        locale: 'en-US',
+      }),
       responsive: ['md'],
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.company" defaultMessage="" />,
-      dataIndex: ['company', 'name'],
+      title: <FormattedMessage id="pages.loansGrid.createForm.monthlyAmount" defaultMessage="" />,
+      dataIndex: ['terms', '0', 'monthlyAmount'],
       hideInSearch: true,
-      ellipsis: true,
+      valueType: (item) => ({
+        type: 'money',
+        locale: 'en-US',
+      }),
+      responsive: ['md'],
+    },
+    {
+      title: <FormattedMessage id="pages.loansGrid.createForm.months" defaultMessage="" />,
+      dataIndex: ['terms', '0', 'months'],
+      hideInSearch: true,
+      valueType: 'digit',
       responsive: ['md'],
     },
   ];
@@ -78,7 +107,7 @@ const UsersList: React.FC = () => {
   const showDeleteConfirm = () => {
     confirm({
       title: intl.formatMessage({
-        id: 'pages.userTable.confirmation.delete',
+        id: 'pages.loanTable.confirmation.delete',
         defaultMessage: '',
       }),
       icon: <ExclamationCircleFilled />,
@@ -89,11 +118,11 @@ const UsersList: React.FC = () => {
               size="small"
               bordered={true}
               dataSource={selectedRows}
-              renderItem={(user) => (
+              renderItem={(loan) => (
                 <List.Item>
                   <List.Item.Meta
-                    avatar={user.id}
-                    description={`${user.firstName} ${user.lastName}`}
+                    avatar={loan.id}
+                    description={`${loan.borrower1.firstName} ${loan.borrower1.lastName}`}
                   />
                 </List.Item>
               )}
@@ -112,7 +141,7 @@ const UsersList: React.FC = () => {
     <PageContainer>
       <ProTable<CurrentEntity, API.PageParams>
         headerTitle={intl.formatMessage({
-          id: 'pages.userTable.title',
+          id: 'pages.loansTable.title',
           defaultMessage: '',
         })}
         actionRef={actionRef}
@@ -136,7 +165,7 @@ const UsersList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={userList}
+        request={loanList}
         onLoad={_handleOnLoad}
         columns={columns}
         size="small"
@@ -170,6 +199,14 @@ const UsersList: React.FC = () => {
           if (actionRef.current) {
             actionRef.current.reload();
           }
+        }}
+      />
+      <ProjectionDrawer
+        loanId={currentRow?.id ?? ''}
+        showProjection={drawerOpen}
+        onClose={() => {
+          setCurrentRow(undefined);
+          setDrawerOpen(false);
         }}
       />
     </PageContainer>

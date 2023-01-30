@@ -2,15 +2,15 @@ import { message } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { useState } from 'react';
 
-import { companiesNameList } from '@/services/api/companies/api';
-import { addUser, editUser } from '@/services/api/users/api';
+import { borrowerNamesList } from '@/services/api/borrowers/api';
+import { addLoan, editLoan } from '@/services/api/loans/api';
 
 type CurrentEntity = API.CurrentBorrower;
 
 const handleAdd = async (fields: Partial<CurrentEntity>) => {
   const hide = message.loading('Loading');
   try {
-    await addUser({ ...fields });
+    await addLoan({ ...fields });
     hide();
     message.success('Added successfully');
     return true;
@@ -24,7 +24,7 @@ const handleAdd = async (fields: Partial<CurrentEntity>) => {
 const handleEdit = async (fields: Partial<CurrentEntity>) => {
   const hide = message.loading('Loading');
   try {
-    await editUser({ ...fields });
+    await editLoan({ ...fields });
     hide();
     message.success('Edit successfully');
     return true;
@@ -37,13 +37,13 @@ const handleEdit = async (fields: Partial<CurrentEntity>) => {
   }
 };
 
-const getUserCompanyOptions = async (): Promise<DefaultOptionType[]> => {
-  const companies = await companiesNameList({});
+const getLoanCompanyOptions = async (): Promise<DefaultOptionType[]> => {
+  const companies = await borrowerNamesList({});
   if (companies) {
     return companies.reduce((accum: DefaultOptionType[], company) => {
       const option: DefaultOptionType = {
         value: company?.id,
-        label: `${company?.nit} - ${company?.name}`,
+        label: `${company?.firstName} - ${company?.lastName}`,
       };
       return [...accum, option];
     }, []);
@@ -78,7 +78,7 @@ const usePageForm = ({ onFinish }: Props) => {
   /*
   useEffect(() => {
     const fetchData = async () => {
-      const companies = await getUserCompanyOptions();
+      const companies = await getLoanCompanyOptions();
       setCompaniesNamesList(companies);
     };
     fetchData();

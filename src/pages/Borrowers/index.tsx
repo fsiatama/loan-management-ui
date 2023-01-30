@@ -1,4 +1,4 @@
-import { userList } from '@/services/api/users/api';
+import { userList } from '@/services/api/borrowers/api';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';

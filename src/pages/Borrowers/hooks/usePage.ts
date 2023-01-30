@@ -1,4 +1,4 @@
-import { removeUsers } from '@/services/api/users/api';
+import { removeBorrowers } from '@/services/api/borrowers/api';
 import { ActionType } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { useCallback, useRef, useState } from 'react';
@@ -9,8 +9,8 @@ const handleRemove = async (users: Partial<CurrentEntity>[]) => {
   const hide = message.loading('Loading');
   if (users.length <= 0) return true;
   try {
-    await removeUsers({
-      key: users.map((row) => row?.id ?? -1),
+    await removeBorrowers({
+      key: users.map((row) => row?.id ?? '-1'),
     });
     hide();
     message.success('Deleted successfully and will refresh soon');

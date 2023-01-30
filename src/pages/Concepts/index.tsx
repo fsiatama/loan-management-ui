@@ -1,4 +1,4 @@
-import { userList } from '@/services/api/users/api';
+import { conceptList } from '@/services/api/concepts/api';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
@@ -136,7 +136,7 @@ const UsersList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={userList}
+        request={conceptList}
         onLoad={_handleOnLoad}
         columns={columns}
         size="small"

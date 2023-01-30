@@ -1,16 +1,16 @@
-import { removeUsers } from '@/services/api/users/api';
+import { removeConcepts } from '@/services/api/concepts/api';
 import { ActionType } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { useCallback, useRef, useState } from 'react';
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentConcept;
 
-const handleRemove = async (users: Partial<CurrentEntity>[]) => {
+const handleRemove = async (concepts: Partial<CurrentEntity>[]) => {
   const hide = message.loading('Loading');
-  if (users.length <= 0) return true;
+  if (concepts.length <= 0) return true;
   try {
-    await removeUsers({
-      key: users.map((row) => row?.id ?? -1),
+    await removeConcepts({
+      key: concepts.map((row) => row?.id ?? '00000'),
     });
     hide();
     message.success('Deleted successfully and will refresh soon');

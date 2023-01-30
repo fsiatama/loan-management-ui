@@ -11,54 +11,56 @@ declare namespace API {
     phone3?: string;
   };
 
+  enum ConceptEnumType {
+    DEBIT = 'DEBIT',
+    CREDIT = 'CREDIT',
+  }
+
   type CurrentBorrower = {
-    id: number;
+    id: string;
     email: string;
     firstName: string;
     lastName: string;
     address: Address;
   };
 
+  type LoanTerm = {
+    id: string;
+    months: number;
+    annualInterestRate: number;
+    latePaymentFee: number;
+    beginToApplyDate?: Date;
+    cutOffDay: number;
+  };
+
+  type CurrentLoan = {
+    id: string;
+    borrower1: CurrentBorrower;
+    borrower2?: CurrentBorrower;
+    amount: number;
+    startDate: Date;
+    terms: LoanTerm;
+  };
+
+  type CurrentConcept = {
+    id: string;
+    name: string;
+    conceptType: ConceptEnumType;
+  };
+
   type CurrentUser = {
-    id: number;
+    id: string;
     name: string;
     email: string;
   };
 
-  type CurrentCompany = {
-    id: number;
-    name: string;
-    nit: string;
-    digcheq: string;
-    allowedIps: string;
-    userTemplateId: number;
-    userTemplate: CurrentUser;
-    totalUsersCount: number;
-  };
-
-  type Product = {
-    id: number;
-    name: string;
-    hasDuration: boolean;
-    hasDeactivateDate: boolean;
-    hasTrades: boolean;
-    hasCountries: boolean;
-    hasPorts: boolean;
-    isActive: boolean;
-  };
-
-  type CurrentSubscription = {
-    id: number;
-    hasImpo: boolean;
-    hasExpo: boolean;
-    canEditReports: boolean;
-    initialDate: string;
-    finalDate: string;
-    months: number;
-    countries: string;
-    ports: string;
-    user: CurrentUser;
-    product: Product;
+  type CurrentProjection = {
+    date: Date;
+    beginning: number;
+    monthlyAmount: number;
+    toInterest: number;
+    toPrincipal: number;
+    ending: number;
   };
 
   type LoginResult = {
@@ -73,19 +75,13 @@ declare namespace API {
     password?: string;
   };
 
-  type UserList = {
-    data?: CurrentUser[];
+  type ApiList<T> = {
+    data?: T[];
     total?: number;
     success?: boolean;
   };
   type UserTemplateList = Partial<CurrentUser>[];
-
-  type CompanyList = {
-    data?: CurrentCompany[];
-    total?: number;
-    success?: boolean;
-  };
-  type CompaniesNameList = Partial<CurrentCompany>[];
+  type BorrowerNamesList = Partial<CurrentBorrower>[];
 
   type PageParams = {
     current?: number;

@@ -2,9 +2,11 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** GET /api/currentUser */
-export const currentUser = async (options?: { [key: string]: any }): Promise<API.CurrentUser> => {
-  return request<API.CurrentUser>('/api/users/profile', {
+/** GET /api/currentBorrower */
+export const currentUser = async (options?: {
+  [key: string]: any;
+}): Promise<API.CurrentBorrower> => {
+  return request<API.CurrentBorrower>('/api/users/profile', {
     method: 'GET',
     ...(options || {}),
   });
@@ -18,8 +20,8 @@ export const userList = async (
     pageSize?: number;
   },
   options?: { [key: string]: any },
-): Promise<API.UserList> => {
-  return request<API.UserList>('/api/borrowers', {
+): Promise<API.ApiList<API.CurrentBorrower>> => {
+  return request<API.ApiList<API.CurrentBorrower>>('/api/borrowers', {
     method: 'GET',
     params: {
       ...params,
@@ -29,11 +31,11 @@ export const userList = async (
 };
 
 /**  GET /api/userList */
-export const userTemplateList = async (
+export const borrowerNamesList = async (
   params: {},
   options?: { [key: string]: any },
-): Promise<API.UserTemplateList> => {
-  return request<API.UserTemplateList>('/api/borrowers/templates', {
+): Promise<API.BorrowerNamesList> => {
+  return request<API.BorrowerNamesList>('/api/borrowers/names', {
     method: 'GET',
     params: {
       ...params,
@@ -43,11 +45,11 @@ export const userTemplateList = async (
 };
 
 /** POST /api/borrowers */
-export const addUser = async (
-  body: Partial<API.CurrentUser>,
+export const addBorrower = async (
+  body: Partial<API.CurrentBorrower>,
   options?: { [key: string]: any },
-): Promise<API.CurrentUser> => {
-  return request<API.CurrentUser>('/api/borrowers', {
+): Promise<API.CurrentBorrower> => {
+  return request<API.CurrentBorrower>('/api/borrowers', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -58,12 +60,12 @@ export const addUser = async (
 };
 
 /** PATCH /api/borrowers */
-export const editUser = async (
-  body: Partial<API.CurrentUser>,
+export const editBorrower = async (
+  body: Partial<API.CurrentBorrower>,
   options?: { [key: string]: any },
-): Promise<API.CurrentUser> => {
+): Promise<API.CurrentBorrower> => {
   const { id, ...rest } = body;
-  return request<API.CurrentUser>(`/api/borrowers/${id}`, {
+  return request<API.CurrentBorrower>(`/api/borrowers/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -74,7 +76,7 @@ export const editUser = async (
 };
 
 /** DELETE /api/user */
-export async function removeUsers(body: { key: number[] }, options?: { [key: string]: any }) {
+export async function removeBorrowers(body: { key: string[] }, options?: { [key: string]: any }) {
   return request<Record<string, any>>('/api/borrowers/batch', {
     method: 'DELETE',
     data: body,
