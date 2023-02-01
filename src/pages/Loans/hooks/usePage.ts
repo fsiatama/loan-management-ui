@@ -26,6 +26,7 @@ const usePage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
+  const actionProjectionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<CurrentEntity>();
   const [selectedRows, setSelectedRows] = useState<CurrentEntity[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -37,6 +38,7 @@ const usePage = () => {
       await handleRemove(selectedRows);
       setSelectedRows([]);
       actionRef.current?.reloadAndRest?.();
+      actionProjectionRef.current?.reloadAndRest?.();
     }
     return true;
   };
@@ -62,6 +64,7 @@ const usePage = () => {
     selectedRows,
     rowSelection,
     actionRef,
+    actionProjectionRef,
     modalOpen,
     setModalOpen,
     currentRow,

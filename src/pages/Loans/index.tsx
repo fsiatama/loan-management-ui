@@ -18,6 +18,7 @@ const UsersList: React.FC = () => {
     selectedRows,
     rowSelection,
     actionRef,
+    actionProjectionRef,
     modalOpen,
     setModalOpen,
     currentRow,
@@ -64,7 +65,7 @@ const UsersList: React.FC = () => {
       ellipsis: true,
       render: (dom, entity) => {
         const name = entity?.borrower1
-          ? `${entity?.borrower1.firstName}  ${entity?.borrower1.lastName}`
+          ? `${entity?.borrower1.lastName}  ${entity?.borrower1.firstName}`
           : '';
         return <>{name}</>;
       },
@@ -107,7 +108,7 @@ const UsersList: React.FC = () => {
   const showDeleteConfirm = () => {
     confirm({
       title: intl.formatMessage({
-        id: 'pages.loanTable.confirmation.delete',
+        id: 'pages.loansTable.confirmation.delete',
         defaultMessage: '',
       }),
       icon: <ExclamationCircleFilled />,
@@ -196,14 +197,19 @@ const UsersList: React.FC = () => {
         values={currentRow}
         onFinish={() => {
           setModalOpen(false);
+          setCurrentRow(undefined);
           if (actionRef.current) {
             actionRef.current.reload();
+          }
+          if (actionProjectionRef.current) {
+            actionProjectionRef.current.reload();
           }
         }}
       />
       <ProjectionDrawer
         loanId={currentRow?.id ?? ''}
         showProjection={drawerOpen}
+        actionRef={actionProjectionRef}
         onClose={() => {
           setCurrentRow(undefined);
           setDrawerOpen(false);

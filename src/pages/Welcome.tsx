@@ -102,7 +102,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            Sicex User Admin
+            Blue Phoenix Dashboard
           </div>
         </div>
       </Card>

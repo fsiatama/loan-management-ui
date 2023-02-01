@@ -32,21 +32,15 @@ export const loanProjection = async (
   });
 };
 
-/**  GET /api/loanList */
-/*
-export const loanTemplateList = async (
-  params: {},
-  options?: { [key: string]: any },
-): Promise<API.LoanTemplateList> => {
-  return request<API.LoanTemplateList>('/api/loans/templates', {
+/**  GET /api/loans/statistics */
+export const getStatistics = async (options?: {
+  [key: string]: any;
+}): Promise<API.ComparativeStatistic[]> => {
+  return request<API.ComparativeStatistic[]>('/api/loans/statistics', {
     method: 'GET',
-    params: {
-      ...params,
-    },
     ...(options || {}),
   });
 };
-*/
 
 /** POST /api/loans */
 export const addLoan = async (

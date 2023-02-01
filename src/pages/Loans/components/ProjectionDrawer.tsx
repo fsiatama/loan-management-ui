@@ -1,8 +1,10 @@
-import useProjection from '@/pages/Concepts/hooks/useProjection';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
+import useProjection from '@/pages/Loans/hooks/useProjection';
+import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
 import Field from '@ant-design/pro-field';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage } from '@umijs/max';
 import { Drawer, Table, Typography } from 'antd';
+import moment from 'moment';
 import React from 'react';
 
 type CurrentEntity = API.CurrentProjection;
@@ -13,9 +15,15 @@ export type ProjectionDrawerProps = {
   loanId: string;
   showProjection: boolean;
   onClose: () => void;
+  actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const ProjectionDrawer: React.FC<ProjectionDrawerProps> = ({ loanId, showProjection, onClose }) => {
+const ProjectionDrawer: React.FC<ProjectionDrawerProps> = ({
+  loanId,
+  showProjection,
+  actionRef,
+  onClose,
+}) => {
   const { projectionList } = useProjection({ loanId });
   const columns: ProColumns<CurrentEntity>[] = [
     {
@@ -76,6 +84,13 @@ const ProjectionDrawer: React.FC<ProjectionDrawerProps> = ({ loanId, showProject
       align: 'right',
     },
   ];
+
+  const pastRowClassName = useEmotionCss(({ token }) => {
+    return {
+      backgroundColor: token['gold-1'],
+    };
+  });
+
   return (
     <Drawer
       size={'large'}
@@ -88,9 +103,17 @@ const ProjectionDrawer: React.FC<ProjectionDrawerProps> = ({ loanId, showProject
         columns={columns}
         dataSource={projectionList}
         rowKey="date"
-        pagination={{
-          showQuickJumper: true,
+        actionRef={actionRef}
+        rowClassName={(record, index) => {
+          console.log(moment().isAfter(record.date, 'month'));
+
+          return moment().isAfter(record.date, 'month') ? pastRowClassName : 'table-row-dark';
         }}
+        pagination={{
+          pageSize: 5000,
+          position: ['none', 'none'],
+        }}
+        scroll={{ y: 590 }}
         toolBarRender={false}
         search={false}
         summary={(pageData) => {

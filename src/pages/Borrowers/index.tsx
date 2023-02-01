@@ -40,7 +40,7 @@ const UsersList: React.FC = () => {
               setModalOpen(true);
             }}
           >
-            {`${entity.firstName}  ${entity.lastName}`}
+            {`${entity.lastName}  ${entity.firstName}`}
           </a>
         );
       },

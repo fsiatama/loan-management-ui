@@ -11,10 +11,10 @@
     ],
   },
   {
-    path: '/welcome',
+    path: '/dashboard',
     name: 'home',
     icon: 'home',
-    component: './Welcome',
+    component: './Dashboard',
   },
   {
     path: '/admin',
@@ -53,7 +53,7 @@
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/dashboard',
   },
   {
     path: '*',

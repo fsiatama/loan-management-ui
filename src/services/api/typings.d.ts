@@ -39,7 +39,7 @@ declare namespace API {
     borrower2?: CurrentBorrower;
     amount: number;
     startDate: Date;
-    terms: LoanTerm;
+    terms: LoanTerm[];
   };
 
   type CurrentConcept = {
@@ -86,5 +86,12 @@ declare namespace API {
   type PageParams = {
     current?: number;
     pageSize?: number;
+  };
+
+  type ComparativeStatistic = {
+    id: number;
+    value: number;
+    prevValue: number;
+    unit: string;
   };
 }
