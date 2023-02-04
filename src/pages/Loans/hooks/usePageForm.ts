@@ -37,10 +37,11 @@ const handleEdit = async (fields: Partial<CurrentEntity>) => {
   }
 };
 
-const getBorrowersOptions = async (): Promise<DefaultOptionType[]> => {
-  const companies = await borrowerNamesList({});
-  if (companies) {
-    return companies.reduce((accum: DefaultOptionType[], borrower) => {
+const getBorrowersOptions = async (params: { keyWords: string }): Promise<DefaultOptionType[]> => {
+  const { keyWords: name } = params;
+  const borrowers = await borrowerNamesList({ name });
+  if (borrowers) {
+    return borrowers.reduce((accum: DefaultOptionType[], borrower) => {
       const option: DefaultOptionType = {
         value: borrower?.id,
         label: `${borrower?.firstName} ${borrower?.lastName} - ${borrower.address?.phone}`,

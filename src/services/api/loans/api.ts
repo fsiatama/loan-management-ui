@@ -8,13 +8,17 @@ export const loanList = async (
     // query
     current?: number;
     pageSize?: number;
+    borrower1?: API.CurrentBorrower;
   },
   options?: { [key: string]: any },
 ): Promise<API.ApiList<API.CurrentLoan>> => {
+  const { borrower1, ...rest } = params;
+
   return request<API.ApiList<API.CurrentLoan>>('/api/loans', {
     method: 'GET',
     params: {
-      ...params,
+      ...rest,
+      name: borrower1?.firstName,
     },
     ...(options || {}),
   });

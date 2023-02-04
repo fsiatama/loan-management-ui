@@ -2,10 +2,10 @@ import { loanList } from '@/services/api/loans/api';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, List, Modal } from 'antd';
+import { Button, List, Modal, Space } from 'antd';
 import React from 'react';
+import LoanDetailsDrawer from './components/LoanDetailsDrawer';
 import PageForm from './components/PageForm';
-import ProjectionDrawer from './components/ProjectionDrawer';
 import usePage from './hooks/usePage';
 
 const { confirm } = Modal;
@@ -38,26 +38,28 @@ const UsersList: React.FC = () => {
       width: 120,
       dataIndex: 'option',
       valueType: 'option',
-      render: (dom, entity) => [
-        <a
-          key={'edit-row'}
-          onClick={() => {
-            setCurrentRow(entity);
-            setModalOpen(true);
-          }}
-        >
-          <FormattedMessage id="pages.table.options.edit" defaultMessage="" />,
-        </a>,
-        <a
-          key={'projection-row'}
-          onClick={() => {
-            setCurrentRow(entity);
-            setDrawerOpen(true);
-          }}
-        >
-          <FormattedMessage id="pages.table.options.projection" defaultMessage="" />,
-        </a>,
-      ],
+      render: (dom, entity) => (
+        <Space size="small">
+          <a
+            key={'edit-row'}
+            onClick={() => {
+              setCurrentRow(entity);
+              setModalOpen(true);
+            }}
+          >
+            <FormattedMessage id="pages.table.options.edit" defaultMessage="" />
+          </a>
+          <a
+            key={'projection-row'}
+            onClick={() => {
+              setCurrentRow(entity);
+              setDrawerOpen(true);
+            }}
+          >
+            <FormattedMessage id="pages.table.options.details" defaultMessage="" />
+          </a>
+        </Space>
+      ),
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.borrower1" defaultMessage="" />,
@@ -206,8 +208,8 @@ const UsersList: React.FC = () => {
           }
         }}
       />
-      <ProjectionDrawer
-        loanId={currentRow?.id ?? ''}
+      <LoanDetailsDrawer
+        loan={currentRow}
         showProjection={drawerOpen}
         actionRef={actionProjectionRef}
         onClose={() => {

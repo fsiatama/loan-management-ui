@@ -1,11 +1,8 @@
 import { message } from 'antd';
-import { DefaultOptionType } from 'antd/es/select';
-import { useState } from 'react';
 
-//import { companiesNameList } from '@/services/api/companies/api';
 import { addConcept, editConcept } from '@/services/api/concepts/api';
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentConcept;
 
 const handleAdd = async (fields: Partial<CurrentEntity>) => {
   const hide = message.loading('Loading');
@@ -37,33 +34,17 @@ const handleEdit = async (fields: Partial<CurrentEntity>) => {
   }
 };
 
-/*
-const getConceptCompanyOptions = async (): Promise<DefaultOptionType[]> => {
-  const companies = await companiesNameList({});
-  if (companies) {
-    return companies.reduce((accum: DefaultOptionType[], company) => {
-      const option: DefaultOptionType = {
-        value: company?.id,
-        label: `${company?.nit} - ${company?.name}`,
-      };
-      return [...accum, option];
-    }, []);
-  }
-  return [];
-};*/
-
 type Props = {
   onFinish: () => void;
 };
 
 const usePageForm = ({ onFinish }: Props) => {
-  const [companiesNamesList, setCompaniesNamesList] = useState<DefaultOptionType[]>([]);
   const _handleSubmitForm = async (value: CurrentEntity) => {
     const { id } = value;
     const isEditing = id ?? false;
     const rowValues: CurrentEntity = {
       ...value,
-      //isActive: !!value.isActive,
+      conceptType: !!value.conceptType ? value.conceptType : API.ConceptEnumType.CREDIT,
     };
     let success;
     if (!isEditing) {
@@ -76,17 +57,7 @@ const usePageForm = ({ onFinish }: Props) => {
     }
   };
 
-  /*
-  useEffect(() => {
-    const fetchData = async () => {
-      const companies = await getConceptCompanyOptions();
-      setCompaniesNamesList(companies);
-    };
-    fetchData();
-  }, []);
-  */
-
-  return { companiesNamesList, _handleSubmitForm };
+  return { _handleSubmitForm };
 };
 
 export default usePageForm;

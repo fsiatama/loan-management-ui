@@ -29,7 +29,7 @@ declare namespace API {
     months: number;
     annualInterestRate: number;
     latePaymentFee: number;
-    beginToApplyDate?: Date;
+    beginToApplyDate?: number;
     cutOffDay: number;
   };
 
@@ -38,8 +38,17 @@ declare namespace API {
     borrower1: CurrentBorrower;
     borrower2?: CurrentBorrower;
     amount: number;
-    startDate: Date;
+    startDate: number;
     terms: LoanTerm[];
+  };
+
+  type CurrentTransaction = {
+    id: string;
+    description: string;
+    amount: number;
+    date: number;
+    concept: CurrentConcept;
+    loan: CurrentLoan;
   };
 
   type CurrentConcept = {
@@ -55,7 +64,7 @@ declare namespace API {
   };
 
   type CurrentProjection = {
-    date: Date;
+    date: number;
     beginning: number;
     monthlyAmount: number;
     toInterest: number;

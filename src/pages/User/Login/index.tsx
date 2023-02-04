@@ -58,7 +58,7 @@ const Login: React.FC = () => {
       flexDirection: 'column',
       height: '100%',
       overflow: 'auto',
-      backgroundColor: '#e6fffb',
+      backgroundColor: '#fafafa',
       backgroundSize: '100% 100%',
       alignItems: 'center',
       justifyContent: 'center',

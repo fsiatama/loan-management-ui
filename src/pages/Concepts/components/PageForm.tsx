@@ -1,16 +1,16 @@
 import {
   ModalForm,
   ProFormSegmented,
-  ProFormSelect,
   ProFormSwitch,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Col, Input, Row } from 'antd';
 import React from 'react';
 import usePageForm from '../hooks/usePageForm';
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentConcept;
 
 export type FormValueType = Partial<CurrentEntity>;
 
@@ -23,11 +23,11 @@ export type PageFormProps = {
 
 const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, onFinish }) => {
   const intl = useIntl();
-  const { _handleSubmitForm, companiesNamesList } = usePageForm({ onFinish });
+  const { _handleSubmitForm } = usePageForm({ onFinish });
   return (
     <ModalForm
       title={intl.formatMessage({
-        id: 'pages.userGrid.createForm.newUser',
+        id: 'pages.conceptsGrid.createForm.new',
         defaultMessage: '',
       })}
       width="700px"
@@ -41,177 +41,48 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
       }}
     >
       <ProFormText hidden name="id" />
-      <Input.Group size="large">
-        <Row gutter={8}>
-          <Col span={12}>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                  message: <FormattedMessage id="pages.userGrid.updateForm.user.name.required" />,
-                },
-              ]}
-              name="name"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.name',
-              })}
-            />
-          </Col>
-          <Col span={12}>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                  message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.lastName.required" />
-                  ),
-                },
-              ]}
-              name="lastName"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.lastName',
-              })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <ProFormText
+      <ProFormTextArea
         rules={[
           {
             required: true,
-            message: <FormattedMessage id="pages.userGrid.updateForm.user.email.required" />,
+            message: <FormattedMessage id="pages.conceptsGrid.createForm.name.required" />,
           },
         ]}
-        name="email"
+        name="name"
         label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.user.email',
+          id: 'pages.conceptsGrid.createForm.name',
         })}
       />
       <Input.Group size="large">
-        <Row gutter={8}>
+        <Row justify="space-around" style={{ padding: '0 1rem' }}>
           <Col span={12}>
-            <ProFormText
-              rules={[
+            <ProFormSegmented
+              name="conceptType"
+              bordered
+              label={intl.formatMessage({
+                id: 'pages.conceptsGrid.createForm.conceptType',
+              })}
+              request={async () => [
                 {
-                  required: true,
-                  message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.username.required" />
-                  ),
+                  label: intl.formatMessage({
+                    id: 'pages.conceptsGrid.createForm.conceptType.debit',
+                  }),
+                  value: 'DEBIT',
+                },
+                {
+                  label: intl.formatMessage({
+                    id: 'pages.conceptsGrid.createForm.conceptType.credit',
+                  }),
+                  value: 'CREDIT',
                 },
               ]}
-              name="username"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.username',
-              })}
-              placeholder={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.username',
-              })}
             />
           </Col>
           <Col span={12}>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                  message: (
-                    <FormattedMessage id="pages.userGrid.updateForm.user.password.required" />
-                  ),
-                },
-              ]}
-              name="password"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.password',
-              })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <ProFormSegmented
-        name="langId"
-        bordered
-        label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.user.lang',
-        })}
-        request={async () => [
-          {
-            label: intl.formatMessage({
-              id: 'pages.userGrid.updateForm.user.lang.ES',
-            }),
-            value: 1,
-          },
-          {
-            label: intl.formatMessage({
-              id: 'pages.userGrid.updateForm.user.lang.EN',
-            }),
-            value: 4,
-          },
-        ]}
-      />
-      <ProFormSelect
-        name={['company', 'id']}
-        showSearch
-        label={intl.formatMessage({
-          id: 'pages.userGrid.updateForm.company',
-        })}
-        options={companiesNamesList}
-        rules={[
-          {
-            required: true,
-            message: <FormattedMessage id="pages.userGrid.updateForm.company.required" />,
-          },
-        ]}
-      />
-      <Input.Group size="large">
-        <Row justify="space-evenly" style={{ padding: '0 1rem' }}>
-          <Col span={8}>
             <ProFormSwitch
-              name="isRoot"
+              name="isToThirdParty"
               label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isRoot',
-              })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="isActive"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isActive',
-              })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="isTemplate"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.isTemplate',
-              })}
-            />
-          </Col>
-        </Row>
-      </Input.Group>
-      <Input.Group size="large">
-        <Row justify="space-evenly" style={{ padding: '0 1rem' }}>
-          <Col span={8}>
-            <ProFormSwitch
-              name="canDownload"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.canDownload',
-              })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="canRenovate"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.canRenovate',
-              })}
-            />
-          </Col>
-          <Col span={8}>
-            <ProFormSwitch
-              name="useMfa"
-              label={intl.formatMessage({
-                id: 'pages.userGrid.updateForm.user.useMfa',
+                id: 'pages.conceptsGrid.createForm.conceptType.isToThirdParty',
               })}
             />
           </Col>

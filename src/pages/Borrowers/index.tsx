@@ -31,7 +31,6 @@ const UsersList: React.FC = () => {
       title: <FormattedMessage id="pages.borrowersGrid.createForm.borrower" defaultMessage="" />,
       dataIndex: 'name',
       ellipsis: true,
-      hideInSearch: true,
       render: (dom, entity) => {
         return (
           <a
@@ -69,7 +68,7 @@ const UsersList: React.FC = () => {
   const showDeleteConfirm = () => {
     confirm({
       title: intl.formatMessage({
-        id: 'pages.userTable.confirmation.delete',
+        id: 'pages.borrowersTable.confirmation.delete',
         defaultMessage: '',
       }),
       icon: <ExclamationCircleFilled />,
@@ -78,12 +77,13 @@ const UsersList: React.FC = () => {
           <>
             <List
               size="small"
-              bordered={true}
+              rowKey={'id'}
+              bordered={false}
               dataSource={selectedRows}
               renderItem={(user) => (
                 <List.Item>
                   <List.Item.Meta
-                    avatar={user.id}
+                    title={user.email}
                     description={`${user.firstName} ${user.lastName}`}
                   />
                 </List.Item>

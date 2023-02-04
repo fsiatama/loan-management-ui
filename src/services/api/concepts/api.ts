@@ -20,13 +20,13 @@ export const conceptList = async (
   });
 };
 
-/**  GET /api/conceptList */
-/*
-export const conceptTemplateList = async (
+/**  GET /api/concepts/names */
+
+export const conceptNamesList = async (
   params: {},
   options?: { [key: string]: any },
-): Promise<API.ConceptTemplateList> => {
-  return request<API.ConceptTemplateList>('/api/concepts/templates', {
+): Promise<API.CurrentConcept[]> => {
+  return request<API.CurrentConcept[]>('/api/concepts/names', {
     method: 'GET',
     params: {
       ...params,
@@ -34,7 +34,6 @@ export const conceptTemplateList = async (
     ...(options || {}),
   });
 };
-*/
 
 /** POST /api/concepts */
 export const addConcept = async (

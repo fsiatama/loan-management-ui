@@ -8,11 +8,10 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Col, Divider, Input, List, Row, Typography } from 'antd';
+import { Col, Divider, Input, List, Row } from 'antd';
+import dayjs from 'dayjs';
 import React from 'react';
 import usePageForm from '../hooks/usePageForm';
-
-const { Text } = Typography;
 
 type CurrentEntity = API.CurrentLoan;
 
@@ -71,6 +70,7 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
             message: <FormattedMessage id="pages.loansGrid.createForm.borrower1.required" />,
           },
         ]}
+        // @ts-ignore
         request={getBorrowersOptions}
       />
       <ProFormSelect
@@ -79,6 +79,7 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
         label={intl.formatMessage({
           id: 'pages.loansGrid.createForm.borrower2',
         })}
+        // @ts-ignore
         request={getBorrowersOptions}
       />
 
@@ -110,6 +111,10 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
                 },
               ]}
               name="startDate"
+              fieldProps={{
+                defaultValue: dayjs(),
+                format: 'MM/DD/YYYY',
+              }}
               label={intl.formatMessage({
                 id: 'pages.loansGrid.createForm.startDate',
               })}

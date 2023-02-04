@@ -9,7 +9,7 @@ import usePage from './hooks/usePage';
 
 const { confirm } = Modal;
 
-type CurrentEntity = API.CurrentBorrower;
+type CurrentEntity = API.CurrentConcept;
 
 const UsersList: React.FC = () => {
   const intl = useIntl();
@@ -28,49 +28,33 @@ const UsersList: React.FC = () => {
 
   const columns: ProColumns<CurrentEntity>[] = [
     {
-      title: 'ID',
-      dataIndex: 'id',
+      title: <FormattedMessage id="pages.table.options.title" defaultMessage="" />,
       hideInSearch: true,
-      width: 66,
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setModalOpen(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      key: 'option',
+      width: 80,
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (dom, entity) => (
+        <a
+          key={'edit-row'}
+          onClick={() => {
+            setCurrentRow(entity);
+            setModalOpen(true);
+          }}
+        >
+          <FormattedMessage id="pages.table.options.edit" defaultMessage="" />
+        </a>
+      ),
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.name" defaultMessage="" />,
+      title: <FormattedMessage id="pages.conceptsGrid.createForm.name" defaultMessage="" />,
       dataIndex: 'name',
       ellipsis: true,
-      render: (dom, entity) => {
-        return <>{`${entity.firstName}  ${entity.lastName}`}</>;
-      },
     },
     {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.username" defaultMessage="" />,
-      dataIndex: 'username',
-      copyable: true,
+      title: <FormattedMessage id="pages.conceptsGrid.createForm.conceptType" defaultMessage="" />,
+      dataIndex: 'conceptType',
       hideInSearch: true,
-    },
-    {
-      title: <FormattedMessage id="pages.userGrid.updateForm.user.email" defaultMessage="" />,
-      dataIndex: 'email',
-      copyable: true,
-      hideInSearch: true,
-      responsive: ['md'],
-    },
-    {
-      title: <FormattedMessage id="pages.userGrid.updateForm.company" defaultMessage="" />,
-      dataIndex: ['company', 'name'],
-      hideInSearch: true,
-      ellipsis: true,
       responsive: ['md'],
     },
   ];
@@ -78,7 +62,7 @@ const UsersList: React.FC = () => {
   const showDeleteConfirm = () => {
     confirm({
       title: intl.formatMessage({
-        id: 'pages.userTable.confirmation.delete',
+        id: 'pages.conceptsTable.confirmation.delete',
         defaultMessage: '',
       }),
       icon: <ExclamationCircleFilled />,
@@ -89,12 +73,9 @@ const UsersList: React.FC = () => {
               size="small"
               bordered={true}
               dataSource={selectedRows}
-              renderItem={(user) => (
+              renderItem={(row) => (
                 <List.Item>
-                  <List.Item.Meta
-                    avatar={user.id}
-                    description={`${user.firstName} ${user.lastName}`}
-                  />
+                  <List.Item.Meta avatar={row.id} description={`${row.name}`} />
                 </List.Item>
               )}
             />
@@ -112,7 +93,7 @@ const UsersList: React.FC = () => {
     <PageContainer>
       <ProTable<CurrentEntity, API.PageParams>
         headerTitle={intl.formatMessage({
-          id: 'pages.userTable.title',
+          id: 'pages.conceptsTable.title',
           defaultMessage: '',
         })}
         actionRef={actionRef}
