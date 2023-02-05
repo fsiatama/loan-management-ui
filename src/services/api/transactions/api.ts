@@ -7,11 +7,18 @@ import { request } from '@umijs/max';
 export const transactionListByLoan = async (
   params: {
     // query
+    loanId: string;
     current?: number;
     pageSize?: number;
   },
   options?: { [key: string]: any },
 ): Promise<Partial<RequestData<API.CurrentProjection>>> => {
+  const { loanId } = params;
+
+  if (!!!loanId) {
+    return [];
+  }
+
   return request<Partial<RequestData<API.CurrentProjection>>>('/api/transactions', {
     method: 'GET',
     params: {

@@ -120,6 +120,7 @@ export default {
   'pages.loansGrid.createForm.paymentDay.required': 'Payment Day is required',
   'pages.loansGrid.projection.date': 'Payment Date',
   'pages.loansGrid.projection.monthlyAmount': 'Idea Payment',
+  'pages.loansGrid.projection.realPayment': 'Real Payment',
   'pages.loansGrid.projection.toInterest': 'Interest',
   'pages.loansGrid.projection.toPrincipal': 'Principal',
   'pages.loansGrid.projection.ending': 'Ending Balance',

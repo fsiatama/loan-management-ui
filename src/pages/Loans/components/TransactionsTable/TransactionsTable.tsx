@@ -47,16 +47,7 @@ const TransactionsTable: React.FC<Props> = ({ loanId }) => {
       align: 'right',
     },
     {
-      dataIndex: 'monthlyAmount',
-      title: <FormattedMessage id="pages.loansGrid.projection.monthlyAmount" defaultMessage="" />,
-      valueType: (item) => ({
-        type: 'money',
-        locale: 'en-US',
-      }),
-      align: 'right',
-    },
-    {
-      dataIndex: 'toInterest',
+      dataIndex: 'appliedToInterest',
       title: <FormattedMessage id="pages.loansGrid.projection.toInterest" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -65,7 +56,7 @@ const TransactionsTable: React.FC<Props> = ({ loanId }) => {
       align: 'right',
     },
     {
-      dataIndex: 'toPrincipal',
+      dataIndex: 'appliedToPrincipal',
       title: <FormattedMessage id="pages.loansGrid.projection.toPrincipal" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -74,7 +65,7 @@ const TransactionsTable: React.FC<Props> = ({ loanId }) => {
       align: 'right',
     },
     {
-      dataIndex: 'ending',
+      dataIndex: 'endingBalance',
       title: <FormattedMessage id="pages.loansGrid.projection.ending" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',

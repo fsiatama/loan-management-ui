@@ -48,11 +48,11 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
               key: 'Transactions',
               children: <TransactionsTable loanId={loan?.id ?? ''} actionRef={actionRef} />,
             },
-            {
-              label: 'Statement',
-              key: 'Statement',
-              children: <ProjectionTable loanId={loan?.id ?? ''} actionRef={actionRef} />,
-            },
+            // {
+            //   label: 'Statement',
+            //   key: 'Statement',
+            //   children: <ProjectionTable loanId={loan?.id ?? ''} actionRef={actionRef} />,
+            // },
           ]}
         />
       </Space>

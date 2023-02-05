@@ -35,7 +35,7 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       },
     },
     {
-      dataIndex: 'beginning',
+      dataIndex: 'initBalance',
       title: <FormattedMessage id="pages.loansGrid.projection.beginning" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -44,7 +44,7 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       align: 'right',
     },
     {
-      dataIndex: 'monthlyAmount',
+      dataIndex: 'ideaPayment',
       title: <FormattedMessage id="pages.loansGrid.projection.monthlyAmount" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -53,7 +53,16 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       align: 'right',
     },
     {
-      dataIndex: 'toInterest',
+      dataIndex: 'realPayment',
+      title: <FormattedMessage id="pages.loansGrid.projection.realPayment" defaultMessage="" />,
+      valueType: (item) => ({
+        type: 'money',
+        locale: 'en-US',
+      }),
+      align: 'right',
+    },
+    {
+      dataIndex: 'appliedToInterest',
       title: <FormattedMessage id="pages.loansGrid.projection.toInterest" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -62,7 +71,7 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       align: 'right',
     },
     {
-      dataIndex: 'toPrincipal',
+      dataIndex: 'appliedToPrincipal',
       title: <FormattedMessage id="pages.loansGrid.projection.toPrincipal" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -71,7 +80,7 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       align: 'right',
     },
     {
-      dataIndex: 'ending',
+      dataIndex: 'endingBalance',
       title: <FormattedMessage id="pages.loansGrid.projection.ending" defaultMessage="" />,
       valueType: (item) => ({
         type: 'money',
@@ -107,14 +116,16 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
       toolBarRender={false}
       search={false}
       summary={(pageData) => {
-        let totalMonthlyAmount = 0;
+        let totalIdeaPayment = 0;
+        let totalRealPayment = 0;
         let totalToInterest = 0;
         let totalToPrincipal = 0;
 
-        pageData.forEach(({ monthlyAmount, toInterest, toPrincipal }) => {
-          totalMonthlyAmount += monthlyAmount;
-          totalToInterest += toInterest;
-          totalToPrincipal += toPrincipal;
+        pageData.forEach(({ ideaPayment, realPayment, appliedToInterest, appliedToPrincipal }) => {
+          totalIdeaPayment += ideaPayment;
+          totalToInterest += appliedToInterest;
+          totalToPrincipal += appliedToPrincipal;
+          totalRealPayment += realPayment;
         });
 
         return (
@@ -125,9 +136,10 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
               </Table.Summary.Cell>
               <Table.Summary.Cell index={1}></Table.Summary.Cell>
               <Table.Summary.Cell index={2}></Table.Summary.Cell>
+              <Table.Summary.Cell index={3}></Table.Summary.Cell>
               <Table.Summary.Cell align="right" index={3}>
                 <Field
-                  text={totalMonthlyAmount}
+                  text={totalRealPayment}
                   valueType={{
                     type: 'money',
                     locale: 'en-US',
@@ -155,7 +167,6 @@ const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
                   mode={'read'}
                 />
               </Table.Summary.Cell>
-              <Table.Summary.Cell index={6}></Table.Summary.Cell>
               <Table.Summary.Cell index={7}></Table.Summary.Cell>
             </Table.Summary.Row>
           </Table.Summary>
