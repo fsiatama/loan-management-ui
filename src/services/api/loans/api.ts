@@ -24,6 +24,23 @@ export const loanList = async (
   });
 };
 
+/**  GET /api/loanStatement */
+export const loanStatement = async (
+  body: {
+    date: string;
+    id: string;
+  },
+  options?: { [key: string]: any },
+): Promise<Blob> => {
+  const { id, date } = body;
+  return request<Blob>(`/api/loans/statement/${id}`, {
+    method: 'GET',
+    params: { date },
+    responseType: 'blob',
+    ...(options || {}),
+  });
+};
+
 /**  GET /api/loanList */
 export const loanProjection = async (
   body: Partial<API.CurrentLoan>,

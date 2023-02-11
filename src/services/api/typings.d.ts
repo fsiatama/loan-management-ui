@@ -64,13 +64,14 @@ declare namespace API {
   };
 
   type CurrentProjection = {
-    date: number;
+    date: string;
     initBalance: number;
     ideaPayment: number;
     realPayment: number;
     appliedToInterest: number;
     appliedToPrincipal: number;
     endingBalance: number;
+    installment: string;
   };
 
   type LoginResult = {

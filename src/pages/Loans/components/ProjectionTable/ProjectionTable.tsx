@@ -11,19 +11,29 @@ type CurrentEntity = API.CurrentProjection;
 const { Text } = Typography;
 
 export type Props = {
-  loanId: string;
+  loan: API.CurrentLoan | undefined;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const ProjectionTable: React.FC<Props> = ({ loanId, actionRef }) => {
-  const { projectionList } = useProjection({ loanId });
+const ProjectionTable: React.FC<Props> = ({ loan, actionRef }) => {
+  const { projectionList, _handleDownload } = useProjection({ loan });
 
   const columns: ProColumns<CurrentEntity>[] = [
     {
       title: <FormattedMessage id="pages.loansGrid.projection.installment" defaultMessage="" />,
-      dataIndex: 'index',
-      valueType: 'index',
+      dataIndex: 'installment',
       align: 'center',
+      render: (dom, entity) => {
+        return (
+          <a
+            onClick={() => {
+              _handleDownload(entity);
+            }}
+          >
+            {`${entity.installment}`}
+          </a>
+        );
+      },
     },
     {
       dataIndex: 'date',
