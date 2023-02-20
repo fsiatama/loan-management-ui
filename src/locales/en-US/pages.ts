@@ -123,6 +123,7 @@ export default {
   'pages.loansGrid.projection.realPayment': 'Real Payment',
   'pages.loansGrid.projection.toInterest': 'Interest',
   'pages.loansGrid.projection.toPrincipal': 'Principal',
+  'pages.loansGrid.projection.otherConcepts': 'Others',
   'pages.loansGrid.projection.ending': 'Ending Balance',
   'pages.loansGrid.projection.beginning': 'Beginning',
   'pages.loansGrid.projection.installment': 'Installment',

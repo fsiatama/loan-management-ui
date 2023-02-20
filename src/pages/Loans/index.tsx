@@ -53,6 +53,9 @@ const UsersList: React.FC = () => {
             key={'projection-row'}
             onClick={() => {
               setCurrentRow(entity);
+              if (actionProjectionRef.current) {
+                actionProjectionRef.current.reload();
+              }
               setDrawerOpen(true);
             }}
           >
@@ -77,6 +80,7 @@ const UsersList: React.FC = () => {
       dataIndex: 'startDate',
       valueType: 'date',
       hideInSearch: true,
+      align: 'center',
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.amount" defaultMessage="" />,
@@ -87,6 +91,7 @@ const UsersList: React.FC = () => {
         locale: 'en-US',
       }),
       responsive: ['md'],
+      align: 'right',
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.monthlyAmount" defaultMessage="" />,
@@ -97,6 +102,7 @@ const UsersList: React.FC = () => {
         locale: 'en-US',
       }),
       responsive: ['md'],
+      align: 'right',
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.months" defaultMessage="" />,
@@ -104,6 +110,7 @@ const UsersList: React.FC = () => {
       hideInSearch: true,
       valueType: 'digit',
       responsive: ['md'],
+      align: 'center',
     },
   ];
 

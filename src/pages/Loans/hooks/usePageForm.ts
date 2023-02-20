@@ -44,7 +44,7 @@ const getBorrowersOptions = async (params: { keyWords: string }): Promise<Defaul
     return borrowers.reduce((accum: DefaultOptionType[], borrower) => {
       const option: DefaultOptionType = {
         value: borrower?.id,
-        label: `${borrower?.firstName} ${borrower?.lastName} - ${borrower.address?.phone}`,
+        label: `${borrower?.lastName} ${borrower?.firstName} - ${borrower.address?.phone}`,
       };
       return [...accum, option];
     }, []);

@@ -1,27 +1,18 @@
-FROM circleci/node:latest-browsers
+# Use the official Node.js image as the base image
+FROM node:lts
 
+# Set the working directory
+WORKDIR /app
 
-WORKDIR /usr/src/app/
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
 
-## add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# Install the dependencies
+RUN npm install
 
-USER $user
+# Copy the rest of the files
+COPY . .
 
-COPY package.json ./
-# RUN npm config set unsafe-perm true
-RUN yarn global add umi
-RUN yarn install --network-timeout 1000000
-
-
-
-COPY ./ ./
-
-# Give owner rights to the current user
-RUN chown -Rh $user:$user /usr/src/app/
-
-#RUN npm run test:all
-
-#RUN npm run fetch:blocks
+# Build the React app
 
 CMD ["npm", "run", "build"]

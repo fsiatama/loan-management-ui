@@ -125,7 +125,23 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
 
       <Divider>Conditions</Divider>
 
-      <ProFormList name="terms" max={1} min={1}>
+      <ProFormList
+        name="terms"
+        initialValue={[
+          {
+            months: 0,
+          },
+        ]}
+        creatorButtonProps={{
+          position: 'bottom',
+          creatorButtonText: 'Building a line',
+        }}
+        creatorRecord={{
+          months: 0,
+        }}
+        min={1}
+        max={1}
+      >
         <Input.Group size="large">
           <Row gutter={8}>
             <Col span={8}>

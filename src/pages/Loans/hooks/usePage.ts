@@ -35,6 +35,7 @@ const usePage = () => {
 
   const _handleRemove = async () => {
     if (selectedRows.length > 0) {
+      setCurrentRow(undefined);
       await handleRemove(selectedRows);
       setSelectedRows([]);
       actionRef.current?.reloadAndRest?.();

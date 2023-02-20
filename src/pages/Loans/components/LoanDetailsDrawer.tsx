@@ -6,7 +6,7 @@ import LoanDescription from './LoanDescription';
 import ProjectionTable from './ProjectionTable';
 import TransactionsTable from './TransactionsTable';
 
-export type LoanDetailsDrawerProps = {
+type LoanDetailsDrawerProps = {
   loan: API.CurrentLoan | undefined;
   showProjection: boolean;
   onClose: () => void;
@@ -31,7 +31,7 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
       onClose={onClose}
     >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <LoanDescription loan={loan} />
+        <LoanDescription loan={loan} actionRef={actionRef} />
         <Tabs
           defaultActiveKey="1"
           type="card"

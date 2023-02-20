@@ -70,6 +70,7 @@ declare namespace API {
     realPayment: number;
     appliedToInterest: number;
     appliedToPrincipal: number;
+    otherConcepts: number;
     endingBalance: number;
     installment: string;
   };

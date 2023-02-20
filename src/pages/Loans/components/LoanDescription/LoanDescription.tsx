@@ -1,4 +1,4 @@
-import { ProDescriptions } from '@ant-design/pro-components';
+import { ActionType, ProDescriptions } from '@ant-design/pro-components';
 import { FormattedMessage } from '@umijs/max';
 import { Button } from 'antd';
 import * as React from 'react';
@@ -9,9 +9,10 @@ type CurrentEntity = API.CurrentLoan;
 
 export type Props = {
   loan: CurrentEntity | undefined;
+  actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const LoanDescription: React.FC<Props> = ({ loan }) => {
+const LoanDescription: React.FC<Props> = ({ loan, actionRef }) => {
   const { modalOpen, currentTransaction, setModalOpen, _handleCancelModal } = useLoanDetails({
     loan,
   });
@@ -100,6 +101,12 @@ const LoanDescription: React.FC<Props> = ({ loan }) => {
         loan={loan}
         onFinish={() => {
           setModalOpen(false);
+          actionRef.current?.reloadAndRest?.();
+          console.log(actionRef.current);
+
+          if (actionRef.current) {
+            actionRef.current.reload();
+          }
         }}
       />
     </>
