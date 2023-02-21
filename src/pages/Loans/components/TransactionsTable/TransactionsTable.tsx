@@ -46,33 +46,6 @@ const TransactionsTable: React.FC<Props> = ({ loanId }) => {
       }),
       align: 'right',
     },
-    {
-      dataIndex: 'appliedToInterest',
-      title: <FormattedMessage id="pages.loansGrid.projection.toInterest" defaultMessage="" />,
-      valueType: (item) => ({
-        type: 'money',
-        locale: 'en-US',
-      }),
-      align: 'right',
-    },
-    {
-      dataIndex: 'appliedToPrincipal',
-      title: <FormattedMessage id="pages.loansGrid.projection.toPrincipal" defaultMessage="" />,
-      valueType: (item) => ({
-        type: 'money',
-        locale: 'en-US',
-      }),
-      align: 'right',
-    },
-    {
-      dataIndex: 'endingBalance',
-      title: <FormattedMessage id="pages.loansGrid.projection.ending" defaultMessage="" />,
-      valueType: (item) => ({
-        type: 'money',
-        locale: 'en-US',
-      }),
-      align: 'right',
-    },
   ];
 
   const pastRowClassName = useEmotionCss(({ token }) => {

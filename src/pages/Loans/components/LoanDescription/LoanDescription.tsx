@@ -1,22 +1,16 @@
-import { ActionType, ProDescriptions } from '@ant-design/pro-components';
+import { ProDescriptions } from '@ant-design/pro-components';
 import { FormattedMessage } from '@umijs/max';
 import { Button } from 'antd';
 import * as React from 'react';
-import useLoanDetails from '../../hooks/useLoanDetails';
-import TransactionForm from '../TransactionForm';
 
 type CurrentEntity = API.CurrentLoan;
 
 export type Props = {
   loan: CurrentEntity | undefined;
-  actionRef: React.MutableRefObject<ActionType | undefined>;
+  onNewTransaction: () => void;
 };
 
-const LoanDescription: React.FC<Props> = ({ loan, actionRef }) => {
-  const { modalOpen, currentTransaction, setModalOpen, _handleCancelModal } = useLoanDetails({
-    loan,
-  });
-
+const LoanDescription: React.FC<Props> = ({ loan, onNewTransaction }) => {
   return (
     <>
       <ProDescriptions
@@ -83,32 +77,11 @@ const LoanDescription: React.FC<Props> = ({ loan, actionRef }) => {
           80
         </ProDescriptions.Item>
         <ProDescriptions.Item valueType="option">
-          <Button
-            key="primary"
-            type="primary"
-            onClick={() => {
-              setModalOpen(true);
-            }}
-          >
+          <Button key="primary" type="primary" onClick={onNewTransaction}>
             Make a transaction
           </Button>
         </ProDescriptions.Item>
       </ProDescriptions>
-      <TransactionForm
-        onCancel={_handleCancelModal}
-        formModalOpen={modalOpen}
-        values={currentTransaction}
-        loan={loan}
-        onFinish={() => {
-          setModalOpen(false);
-          actionRef.current?.reloadAndRest?.();
-          console.log(actionRef.current);
-
-          if (actionRef.current) {
-            actionRef.current.reload();
-          }
-        }}
-      />
     </>
   );
 };

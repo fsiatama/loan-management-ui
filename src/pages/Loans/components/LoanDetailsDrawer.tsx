@@ -2,8 +2,10 @@ import { useDimensions } from '@/hooks/useDimensions';
 import { ActionType } from '@ant-design/pro-components';
 import { Drawer, Space, Tabs } from 'antd';
 import React from 'react';
+import useLoanDetails from '../hooks/useLoanDetails';
 import LoanDescription from './LoanDescription';
 import ProjectionTable from './ProjectionTable';
+import TransactionForm from './TransactionForm';
 import TransactionsTable from './TransactionsTable';
 
 type LoanDetailsDrawerProps = {
@@ -21,6 +23,10 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
 }) => {
   const { height } = useDimensions();
 
+  const { modalOpen, currentTransaction, setModalOpen, _handleCancelModal } = useLoanDetails({
+    loan,
+  });
+
   return (
     <Drawer
       size={'large'}
@@ -31,7 +37,12 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
       onClose={onClose}
     >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <LoanDescription loan={loan} actionRef={actionRef} />
+        <LoanDescription
+          loan={loan}
+          onNewTransaction={() => {
+            setModalOpen(true);
+          }}
+        />
         <Tabs
           defaultActiveKey="1"
           type="card"
@@ -41,7 +52,15 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
             {
               label: 'Projection',
               key: 'Projection',
-              children: <ProjectionTable loan={loan} actionRef={actionRef} />,
+              children: (
+                <ProjectionTable
+                  loan={loan}
+                  actionRef={actionRef}
+                  onNewPayment={() => {
+                    console.log(111);
+                  }}
+                />
+              ),
             },
             {
               label: 'Transactions',
@@ -51,6 +70,21 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
           ]}
         />
       </Space>
+      <TransactionForm
+        onCancel={_handleCancelModal}
+        formModalOpen={modalOpen}
+        values={currentTransaction}
+        loan={loan}
+        onFinish={() => {
+          setModalOpen(false);
+          actionRef.current?.reloadAndRest?.();
+          console.log(actionRef.current);
+
+          if (actionRef.current) {
+            actionRef.current.reload();
+          }
+        }}
+      />
     </Drawer>
   );
 };

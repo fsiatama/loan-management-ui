@@ -14,9 +14,10 @@ const { Text } = Typography;
 export type Props = {
   loan: API.CurrentLoan | undefined;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  onNewPayment: () => void;
 };
 
-const ProjectionTable: React.FC<Props> = ({ loan, actionRef }) => {
+const ProjectionTable: React.FC<Props> = ({ loan, actionRef, onNewPayment }) => {
   const { modalPDFOpen, setModalPDFOpen, pdfSrc, _projectionRequest, _handleDownload } =
     useProjection({
       loan,
@@ -74,6 +75,7 @@ const ProjectionTable: React.FC<Props> = ({ loan, actionRef }) => {
         locale: 'en-US',
       }),
       align: 'right',
+      render: (_, record) => (record.realPayment > 0 ? <Text type="success">{_}</Text> : <>{_}</>),
     },
     {
       dataIndex: 'appliedToInterest',
@@ -101,6 +103,7 @@ const ProjectionTable: React.FC<Props> = ({ loan, actionRef }) => {
         locale: 'en-US',
       }),
       align: 'right',
+      render: (_, record) => (record.otherConcepts < 0 ? <Text type="danger">{_}</Text> : <>{_}</>),
     },
     {
       dataIndex: 'endingBalance',
