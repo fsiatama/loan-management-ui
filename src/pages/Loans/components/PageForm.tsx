@@ -176,7 +176,7 @@ const PageForm: React.FC<PageFormProps> = ({ formModalOpen, values, onCancel, on
                 label={intl.formatMessage({
                   id: 'pages.loansGrid.createForm.annualInterestRate',
                 })}
-                fieldProps={{ precision: 2, addonAfter: '%' }}
+                fieldProps={{ precision: 3, addonAfter: '%' }}
                 min={1}
                 max={100}
               />

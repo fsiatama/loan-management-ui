@@ -65,6 +65,29 @@ const UsersList: React.FC = () => {
       ),
     },
     {
+      title: '',
+      hideInSearch: true,
+      dataIndex: 'status',
+      valueType: 'radio',
+      initialValue: 'all',
+      width: 20,
+      renderText: (text, entity) => {
+        return entity.balance.amountInArrears > 0 ? 'error' : 'online';
+      },
+      valueEnum: {
+        online: { text: '', status: 'Success' },
+        error: { text: '', status: 'Error' },
+      },
+    },
+    {
+      title: (
+        <FormattedMessage id="pages.loansGrid.createForm.currentInstallment" defaultMessage="" />
+      ),
+      dataIndex: ['balance', 'installment'],
+      width: 120,
+      align: 'center',
+    },
+    {
       title: <FormattedMessage id="pages.loansGrid.createForm.borrower1" defaultMessage="" />,
       dataIndex: ['borrower1', 'firstName'],
       ellipsis: true,
@@ -74,13 +97,6 @@ const UsersList: React.FC = () => {
           : '';
         return <>{name}</>;
       },
-    },
-    {
-      title: <FormattedMessage id="pages.loansGrid.createForm.startDate" defaultMessage="" />,
-      dataIndex: 'startDate',
-      valueType: 'date',
-      hideInSearch: true,
-      align: 'center',
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.amount" defaultMessage="" />,
@@ -94,8 +110,8 @@ const UsersList: React.FC = () => {
       align: 'right',
     },
     {
-      title: <FormattedMessage id="pages.loansGrid.createForm.monthlyAmount" defaultMessage="" />,
-      dataIndex: ['terms', '0', 'monthlyAmount'],
+      title: <FormattedMessage id="pages.loansGrid.createForm.principalAmount" defaultMessage="" />,
+      dataIndex: ['balance', 'amountToPrincipal'],
       hideInSearch: true,
       valueType: (item) => ({
         type: 'money',
@@ -105,12 +121,30 @@ const UsersList: React.FC = () => {
       align: 'right',
     },
     {
-      title: <FormattedMessage id="pages.loansGrid.createForm.months" defaultMessage="" />,
-      dataIndex: ['terms', '0', 'months'],
+      title: <FormattedMessage id="pages.loansGrid.createForm.interestAmount" defaultMessage="" />,
+      dataIndex: ['balance', 'amountToInterest'],
       hideInSearch: true,
-      valueType: 'digit',
+      valueType: (item) => ({
+        type: 'money',
+        locale: 'en-US',
+      }),
       responsive: ['md'],
-      align: 'center',
+      align: 'right',
+    },
+    {
+      title: <FormattedMessage id="pages.loansGrid.createForm.progress" defaultMessage="" />,
+      dataIndex: ['terms', '0', 'months'],
+      key: 'progress',
+      hideInSearch: true,
+      width: 120,
+      align: 'right',
+      renderText: (text, entity) => {
+        return ((entity.balance.amountToPrincipal / entity.amount) * 100).toFixed(1);
+      },
+      valueType: (item) => ({
+        type: 'percent',
+        precision: 2,
+      }),
     },
   ];
 

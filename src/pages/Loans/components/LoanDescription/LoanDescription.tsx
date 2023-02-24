@@ -49,7 +49,11 @@ const LoanDescription: React.FC<Props> = ({ loan, onNewTransaction }) => {
             ),
             key: 'annualInterestRate',
             dataIndex: ['terms', '0', 'annualInterestRate'],
-            valueType: 'percent',
+            valueType: (item) => ({
+              type: 'percent',
+              precision: 3,
+              locale: 'en-US',
+            }),
           },
           {
             title: <FormattedMessage id="pages.loansGrid.createForm.months" defaultMessage="" />,

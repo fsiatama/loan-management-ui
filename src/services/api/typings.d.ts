@@ -33,6 +33,17 @@ declare namespace API {
     cutOffDay: number;
   };
 
+  type Balance = {
+    amountInArrears: number;
+    amountLateFee: number;
+    amountPaid: number;
+    amountToInterest: number;
+    amountToPrincipal: number;
+    installment: string;
+    lastPaymentDate: number;
+    latePayments: number;
+  };
+
   type CurrentLoan = {
     id: string;
     borrower1: CurrentBorrower;
@@ -40,6 +51,7 @@ declare namespace API {
     amount: number;
     startDate: number;
     terms: LoanTerm[];
+    balance: Balance;
   };
 
   type CurrentTransaction = {
