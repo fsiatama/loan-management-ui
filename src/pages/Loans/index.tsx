@@ -83,6 +83,7 @@ const UsersList: React.FC = () => {
       title: (
         <FormattedMessage id="pages.loansGrid.createForm.currentInstallment" defaultMessage="" />
       ),
+      hideInSearch: true,
       dataIndex: ['balance', 'installment'],
       width: 120,
       align: 'center',

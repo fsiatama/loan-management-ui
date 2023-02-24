@@ -56,9 +56,14 @@ const LoanDescription: React.FC<Props> = ({ loan, onNewTransaction }) => {
             }),
           },
           {
-            title: <FormattedMessage id="pages.loansGrid.createForm.months" defaultMessage="" />,
-            key: 'months',
-            dataIndex: ['terms', '0', 'months'],
+            title: (
+              <FormattedMessage
+                id="pages.loansGrid.createForm.currentInstallment"
+                defaultMessage=""
+              />
+            ),
+            key: 'installment',
+            dataIndex: ['balance', 'installment'],
           },
           {
             title: <FormattedMessage id="pages.loansGrid.createForm.startDate" defaultMessage="" />,
@@ -75,11 +80,22 @@ const LoanDescription: React.FC<Props> = ({ loan, onNewTransaction }) => {
               locale: 'en-US',
             }),
           },
+          {
+            title: <FormattedMessage id="pages.loansGrid.createForm.progress" defaultMessage="" />,
+            key: 'annualInterestRate',
+            dataIndex: ['terms', '0', 'months'],
+            renderText: (text, entity) => {
+              const principal = entity?.balance?.amountToPrincipal ?? 0;
+              const total = entity?.amount ?? 1;
+              return ((principal / total) * 100).toFixed(1);
+            },
+            valueType: (item) => ({
+              type: 'percent',
+              precision: 2,
+            }),
+          },
         ]}
       >
-        <ProDescriptions.Item label="Loan payment" valueType="percent">
-          80
-        </ProDescriptions.Item>
         <ProDescriptions.Item valueType="option">
           <Button key="primary" type="primary" onClick={onNewTransaction}>
             Make a transaction
