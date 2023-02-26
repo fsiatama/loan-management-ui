@@ -13,12 +13,14 @@ type LoanDetailsDrawerProps = {
   showProjection: boolean;
   onClose: () => void;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  actionLoanRef: React.MutableRefObject<ActionType | undefined>;
 };
 
 const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
   loan,
   showProjection,
   actionRef,
+  actionLoanRef,
   onClose,
 }) => {
   const { height } = useDimensions();
@@ -78,7 +80,8 @@ const LoanDetailsDrawer: React.FC<LoanDetailsDrawerProps> = ({
         onFinish={() => {
           setModalOpen(false);
           actionRef.current?.reloadAndRest?.();
-          console.log(actionRef.current);
+          actionLoanRef.current?.reloadAndRest?.();
+          //console.log(actionRef.current);
 
           if (actionRef.current) {
             actionRef.current.reload();

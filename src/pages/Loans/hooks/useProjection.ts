@@ -30,26 +30,34 @@ const useProjection = ({ loan }: Props) => {
     };
   };
 
-  const _handleDownload = async (currentRow: CurrentEntity) => {
+  const _handlePreview = async (currentRow: CurrentEntity) => {
     if (currentRow) {
       const result = await loanStatement({ id: loan?.id ?? '', date: currentRow.date });
 
       const pdfUrl = URL.createObjectURL(result);
       setPdfSrc(pdfUrl);
       setModalPDFOpen(true);
+    }
+  };
 
-      /*if ('download' in document.createElement('a')) {
+  const _handleDownload = async (currentRow: CurrentEntity) => {
+    if (currentRow) {
+      const result = await loanStatement({ id: loan?.id ?? '', date: currentRow.date });
+
+      const pdfUrl = URL.createObjectURL(result);
+
+      if ('download' in document.createElement('a')) {
         const elink = document.createElement('a');
         elink.download = `${loan?.borrower1.lastName} - ${currentRow.date}`;
         elink.style.display = 'none';
-        elink.href = URL.createObjectURL(result);
+        elink.href = pdfUrl;
         document.body.appendChild(elink);
         elink.click();
         URL.revokeObjectURL(elink.href);
         document.body.removeChild(elink);
       } else {
         //navigator.msSaveBlob(result, 'test');
-      }*/
+      }
     }
     return true;
   };

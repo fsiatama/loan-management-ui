@@ -34,14 +34,19 @@ declare namespace API {
   };
 
   type Balance = {
+    amountPaid: number;
+    amountToPrincipal: number;
+    amountToInterest: number;
     amountInArrears: number;
     amountLateFee: number;
-    amountPaid: number;
-    amountToInterest: number;
-    amountToPrincipal: number;
-    installment: string;
-    lastPaymentDate: number;
-    latePayments: number;
+    activeBorrowers: number;
+    loansAmount: number;
+  };
+
+  type PivotReport = {
+    dataSource: {
+      data: Balance[];
+    };
   };
 
   type CurrentLoan = {
@@ -117,5 +122,17 @@ declare namespace API {
     value: number;
     prevValue: number;
     unit: string;
+  };
+
+  type Balance = {
+    amountPaid: number;
+    amountToPrincipal: number;
+    amountToInterest: number;
+    amountInArrears: number;
+    amountLateFee: number;
+    lastPaymentDate: string;
+    loan: {
+      amount: number;
+    };
   };
 }

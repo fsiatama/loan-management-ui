@@ -58,3 +58,11 @@ export const addTransaction = async (
     ...(options || {}),
   });
 };
+
+/**  GET /api/transactions/statistics */
+export const getStatistics = async (options?: { [key: string]: any }): Promise<API.Balance[]> => {
+  return request<API.Balance[]>('/api/transactions/statistics', {
+    method: 'GET',
+    ...(options || {}),
+  });
+};

@@ -53,11 +53,9 @@ export const loanProjection = async (
   });
 };
 
-/**  GET /api/loans/statistics */
-export const getStatistics = async (options?: {
-  [key: string]: any;
-}): Promise<API.ComparativeStatistic[]> => {
-  return request<API.ComparativeStatistic[]>('/api/loans/statistics', {
+/**  GET /api/balance */
+export const getStatistics = async (options?: { [key: string]: any }): Promise<API.Balance> => {
+  return request<API.Balance>('/api/balance', {
     method: 'GET',
     ...(options || {}),
   });

@@ -254,6 +254,7 @@ const UsersList: React.FC = () => {
         loan={currentRow}
         showProjection={drawerOpen}
         actionRef={actionProjectionRef}
+        actionLoanRef={actionRef}
         onClose={() => {
           setCurrentRow(undefined);
           setDrawerOpen(false);

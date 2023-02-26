@@ -1,26 +1,18 @@
-import { Col, Row } from 'antd';
+import PivotTable from '@/components/PivotTable';
 import React from 'react';
 import { StatisticsCards } from './Cards/StatisticsCards';
 
-const DesktopLayout: React.FC = () => {
+interface IPivotTableProps {
+  report: API.PivotReport | undefined;
+  statistics: API.Balance | undefined;
+}
+
+const DesktopLayout: React.FC<IPivotTableProps> = ({ report, statistics }) => {
   return (
-    <Row>
-      <Row gutter={[30, 30]}>
-        <Col span={24}>
-          <Row gutter={[30, 30]}>
-            <StatisticsCards />
-          </Row>
-        </Col>
-
-        {/* <Col id="activity" xl={24} xxl={12}>
-          <ActivityCard />
-        </Col>
-
-        <Col id="health" xl={24} xxl={12}>
-          <HealthCard />
-        </Col> */}
-      </Row>
-    </Row>
+    <>
+      <StatisticsCards statistics={statistics} />
+      <PivotTable report={report} />;
+    </>
   );
 };
 

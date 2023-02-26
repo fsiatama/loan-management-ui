@@ -1,4 +1,4 @@
-import { Pie } from '@ant-design/plots';
+import { Liquid } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
 import React from 'react';
@@ -6,8 +6,12 @@ import usePage from '../../hooks/usePage';
 
 const { Statistic, Divider } = StatisticCard;
 
-export const StatisticsCards: React.FC = () => {
-  const { configArea, configPie, responsive, setResponsive } = usePage();
+interface IStatisticsCardsProps {
+  statistics: API.Balance | undefined;
+}
+
+export const StatisticsCards: React.FC<IStatisticsCardsProps> = ({ statistics }) => {
+  const { setResponsive, pieRemaining, piePayments, piePrincipal, pieInterest } = usePage();
 
   /*const statisticsCards = useMemo(
     () =>
@@ -42,40 +46,61 @@ export const StatisticsCards: React.FC = () => {
         setResponsive(offset.width < 800);
       }}
     >
-      <ProCard title="Blue Phoenix" extra="February 2023 " split={'vertical'}>
-        <ProCard split="vertical">
+      <ProCard split="vertical">
+        <StatisticCard.Group direction="row" style={{ marginBlockStart: 8 }} gutter={[16, 16]}>
           <StatisticCard
             statistic={{
-              title: 'Total Borrowers',
-              value: 234,
-              description: <Statistic title="" value="8.04%" trend="down" />,
+              title: 'Total loans',
+              value: statistics?.loansAmount.toFixed(2),
+              prefix: '$',
             }}
           />
           <StatisticCard
             statistic={{
               title: 'Total Remaining',
-              value: 156000,
+              value: ((statistics?.loansAmount ?? 0) - (statistics?.amountPaid ?? 0)).toFixed(2),
               prefix: '$',
-              description: <Statistic title="USD" value="8.04%" trend="up" />,
+            }}
+            chart={pieRemaining && <Liquid {...pieRemaining} />}
+            chartPlacement="left"
+          />
+          <StatisticCard
+            statistic={{
+              title: 'Active Loans',
+              value: statistics?.activeBorrowers,
             }}
           />
+        </StatisticCard.Group>
+        <StatisticCard.Group direction="row" style={{ marginBlockStart: 8 }} gutter={[16, 16]}>
           <StatisticCard
             statistic={{
               title: 'Total Payments',
-              value: 256000,
+              value: statistics?.amountPaid.toFixed(2),
               prefix: '$',
-              description: <Statistic title="USD" value="8.04%" trend="up" />,
             }}
+            chart={piePayments && <Liquid {...piePayments} />}
+            chartPlacement="left"
           />
           <StatisticCard
             statistic={{
-              title: 'Late Payments count',
-              value: '134',
+              title: 'Total to Principal',
+              value: statistics?.amountToPrincipal.toFixed(2),
+              prefix: '$',
             }}
+            chart={piePrincipal && <Liquid {...piePrincipal} />}
+            chartPlacement="left"
           />
-        </ProCard>
+          <StatisticCard
+            statistic={{
+              title: 'Total to Interest',
+              value: statistics?.amountToInterest.toFixed(2),
+              prefix: '$',
+            }}
+            chart={pieInterest && <Liquid {...pieInterest} />}
+            chartPlacement="left"
+          />
+        </StatisticCard.Group>
       </ProCard>
-      <StatisticCard title="Borrowers" chart={<Pie {...configPie} />} />
     </RcResizeObserver>
   );
 };
