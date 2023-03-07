@@ -41,6 +41,7 @@ declare namespace API {
     amountLateFee: number;
     activeBorrowers: number;
     loansAmount: number;
+    detailed: Balance[];
   };
 
   type PivotReport = {

@@ -104,6 +104,7 @@ export default {
   'pages.loansGrid.createForm.borrower1.required': 'Borrower Principal is required',
   'pages.loansGrid.createForm.borrower2': 'Co Borrower',
   'pages.loansGrid.createForm.currentInstallment': 'Current installment',
+  'pages.loansGrid.createForm.lastPaymentDate': 'Last payment',
   'pages.loansGrid.createForm.startDate': 'Start Date',
   'pages.loansGrid.createForm.startDate.required': 'Start Date is required',
   'pages.loansGrid.createForm.amount': 'Loan Amount',

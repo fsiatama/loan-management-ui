@@ -12,7 +12,7 @@ const PivotTable: React.FC<IPivotTableProps> = ({ report }) => {
   const onReportComplete = () => {
     if (ref.current) {
       ref.current.webdatarocks.off('reportcomplete');
-      console.log(ref.current.webdatarocks);
+      //console.log(ref.current.webdatarocks);
     }
   };
 

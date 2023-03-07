@@ -89,6 +89,14 @@ const UsersList: React.FC = () => {
       align: 'center',
     },
     {
+      title: <FormattedMessage id="pages.loansGrid.createForm.lastPaymentDate" defaultMessage="" />,
+      hideInSearch: true,
+      dataIndex: ['balance', 'lastPaymentDate'],
+      width: 120,
+      align: 'center',
+      valueType: 'date',
+    },
+    {
       title: <FormattedMessage id="pages.loansGrid.createForm.borrower1" defaultMessage="" />,
       dataIndex: ['borrower1', 'firstName'],
       ellipsis: true,

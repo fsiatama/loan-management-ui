@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const usePage = () => {
   const [responsive, setResponsive] = useState<boolean>(false);
   const [report, setReport] = useState<API.PivotReport>();
+  const [loansReport, setLoansReport] = useState<API.PivotReport>();
   const [statistics, setStatistics] = useState<API.Balance>();
   const [pieRemaining, setPieRemaining] = useState<any>();
   const [piePayments, setPiePayments] = useState<any>();
@@ -35,6 +36,7 @@ const usePage = () => {
 
   useEffect(() => {
     getLoansStatistics().then((res) => {
+      const { detailed } = res;
       setStatistics(res);
       setPieRemaining({
         ...pieConfig,
@@ -67,6 +69,58 @@ const usePage = () => {
           },
         },
       });
+
+      const loansRep = {
+        dataSource: {
+          data: detailed,
+        },
+        slice: {
+          rows: [
+            {
+              uniqueName: 'borrower',
+            },
+            {
+              uniqueName: 'loanId',
+            },
+          ],
+          columns: [],
+          measures: [
+            {
+              uniqueName: 'loanAmount',
+              aggregation: 'sum',
+              format: '5dbga6vw',
+            },
+            {
+              uniqueName: 'amountPaid',
+              aggregation: 'sum',
+              format: '5dbga6vw',
+            },
+            {
+              uniqueName: 'amountToInterest',
+              aggregation: 'sum',
+              format: '5dbga6vw',
+            },
+            {
+              uniqueName: 'amountToPrincipal',
+              aggregation: 'sum',
+              format: '5dbga6vw',
+            },
+          ],
+        },
+        formats: [
+          {
+            thousandsSeparator: ',',
+            decimalSeparator: '.',
+            decimalPlaces: 2,
+            currencySymbol: '$',
+            currencySymbolAlign: 'left',
+            nullValue: '',
+            textAlign: 'right',
+            isPercent: false,
+          },
+        ],
+      };
+      setLoansReport(loansRep);
     });
     getStatistics().then((res) => {
       const report = {
@@ -117,6 +171,7 @@ const usePage = () => {
 
   return {
     report,
+    loansReport,
     statistics,
     pieRemaining,
     piePayments,
