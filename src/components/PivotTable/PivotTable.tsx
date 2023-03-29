@@ -33,9 +33,9 @@ const PivotTable: React.FC<IPivotTableProps> = ({ report }) => {
               showDrillThroughConfigurator: false,
               showEmptyData: false,
               grid: {
-                // showTotals: "off",
+                showTotals: 'off',
                 type: 'compact',
-                showFilter: false,
+                showFilter: true,
               },
             },
           }}

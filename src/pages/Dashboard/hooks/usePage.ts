@@ -77,31 +77,36 @@ const usePage = () => {
         slice: {
           rows: [
             {
-              uniqueName: 'borrower',
+              uniqueName: 'BORROWER',
             },
             {
-              uniqueName: 'loanId',
+              uniqueName: 'LOAN ID',
             },
           ],
           columns: [],
           measures: [
             {
-              uniqueName: 'loanAmount',
+              uniqueName: 'LOAN AMOUNT',
               aggregation: 'sum',
               format: '5dbga6vw',
             },
             {
-              uniqueName: 'amountPaid',
+              uniqueName: 'AMOUNT PAID',
               aggregation: 'sum',
               format: '5dbga6vw',
             },
             {
-              uniqueName: 'amountToInterest',
+              uniqueName: 'INTEREST',
               aggregation: 'sum',
               format: '5dbga6vw',
             },
             {
-              uniqueName: 'amountToPrincipal',
+              uniqueName: 'PRINCIPAL',
+              aggregation: 'sum',
+              format: '5dbga6vw',
+            },
+            {
+              uniqueName: 'BALANCE',
               aggregation: 'sum',
               format: '5dbga6vw',
             },

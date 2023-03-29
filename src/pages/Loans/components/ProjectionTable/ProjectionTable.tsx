@@ -1,9 +1,11 @@
 import PDFPreview from '@/components/PDFPreview/PDFPreview';
+import FileSearchOutlined from '@ant-design/icons/lib/icons/FileSearchOutlined';
+import PrinterOutlined from '@ant-design/icons/lib/icons/PrinterOutlined';
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
 import Field from '@ant-design/pro-field';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage } from '@umijs/max';
-import { Table, Typography } from 'antd';
+import { Button, Space, Table, Typography } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 import useProjection from '../../hooks/useProjection';
@@ -18,10 +20,16 @@ export type Props = {
 };
 
 const ProjectionTable: React.FC<Props> = ({ loan, actionRef, onNewPayment }) => {
-  const { modalPDFOpen, setModalPDFOpen, pdfSrc, _projectionRequest, _handleDownload } =
-    useProjection({
-      loan,
-    });
+  const {
+    modalPDFOpen,
+    setModalPDFOpen,
+    pdfSrc,
+    _projectionRequest,
+    _handleDownload,
+    _handlePreview,
+  } = useProjection({
+    loan,
+  });
 
   const columns: ProColumns<CurrentEntity>[] = [
     {
@@ -30,13 +38,26 @@ const ProjectionTable: React.FC<Props> = ({ loan, actionRef, onNewPayment }) => 
       align: 'center',
       render: (dom, entity) => {
         return (
-          <a
-            onClick={() => {
-              _handleDownload(entity);
-            }}
-          >
-            {`${entity.installment}`}
-          </a>
+          <Space>
+            <Button
+              type="primary"
+              shape="circle"
+              onClick={() => {
+                _handleDownload(entity);
+              }}
+              icon={<PrinterOutlined />}
+              size="large"
+            />
+            <Button
+              type="dashed"
+              shape="circle"
+              onClick={() => {
+                _handlePreview(entity);
+              }}
+              icon={<FileSearchOutlined />}
+              size="large"
+            />
+          </Space>
         );
       },
     },

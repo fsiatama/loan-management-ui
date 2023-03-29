@@ -68,6 +68,7 @@ const useProjection = ({ loan }: Props) => {
     pdfSrc,
     _projectionRequest,
     _handleDownload,
+    _handlePreview,
   };
 };
 
