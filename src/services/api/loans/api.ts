@@ -10,7 +10,7 @@ export const loanList = async (
     pageSize?: number;
     borrower1?: API.CurrentBorrower;
   },
-  options?: { [key: string]: any },
+  sort?: { [key: string]: any },
 ): Promise<API.ApiList<API.CurrentLoan>> => {
   const { borrower1, ...rest } = params;
 
@@ -19,8 +19,8 @@ export const loanList = async (
     params: {
       ...rest,
       name: borrower1?.firstName,
+      sort,
     },
-    ...(options || {}),
   });
 };
 

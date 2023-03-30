@@ -7,7 +7,6 @@ import { Table, Typography } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 import { useRef } from 'react';
-import useProjection from '../../hooks/useProjection';
 
 type CurrentEntity = API.CurrentProjection;
 const { Text } = Typography;
@@ -18,8 +17,6 @@ export type Props = {
 };
 
 const TransactionsTable: React.FC<Props> = ({ loanId }) => {
-  const { projectionList } = useProjection({ loanId });
-
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<CurrentEntity>[] = [

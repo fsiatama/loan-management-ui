@@ -95,11 +95,13 @@ const UsersList: React.FC = () => {
       width: 120,
       align: 'center',
       valueType: 'date',
+      sorter: true,
     },
     {
       title: <FormattedMessage id="pages.loansGrid.createForm.borrower1" defaultMessage="" />,
       dataIndex: ['borrower1', 'firstName'],
       ellipsis: true,
+      sorter: true,
       render: (dom, entity) => {
         const name = entity?.borrower1
           ? `${entity?.borrower1.lastName}  ${entity?.borrower1.firstName}`
@@ -116,6 +118,7 @@ const UsersList: React.FC = () => {
         locale: 'en-US',
       }),
       responsive: ['md'],
+      sorter: true,
       align: 'right',
     },
     {
