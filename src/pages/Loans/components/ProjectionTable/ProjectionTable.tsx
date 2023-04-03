@@ -57,6 +57,7 @@ const ProjectionTable: React.FC<Props> = ({ loan, actionRef, onNewPayment }) => 
               icon={<FileSearchOutlined />}
               size="large"
             />
+            <span>{entity.installment}</span>
           </Space>
         );
       },
