@@ -1,8 +1,13 @@
 import { loanList } from '@/services/api/loans/api';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  ExclamationCircleFilled,
+  FilePdfOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, List, Modal, Space } from 'antd';
+import { Button, DatePicker, List, Modal, Space } from 'antd';
 import React from 'react';
 import LoanDetailsDrawer from './components/LoanDetailsDrawer';
 import PageForm from './components/PageForm';
@@ -193,6 +198,26 @@ const UsersList: React.FC = () => {
     });
   };
 
+  const showStatementsConfirm = () => {
+    confirm({
+      title: intl.formatMessage({
+        id: 'pages.loansTable.confirmation.delete',
+        defaultMessage: '',
+      }),
+      icon: <ExclamationCircleFilled />,
+      content: (() => {
+        return (
+          <>
+            <DatePicker picker="month" />
+          </>
+        );
+      })(),
+      okType: 'danger',
+      onOk() {
+        //_handleRemove();
+      },
+    });
+  };
   return (
     <PageContainer>
       <ProTable<CurrentEntity, API.PageParams>
@@ -238,12 +263,20 @@ const UsersList: React.FC = () => {
             </div>
           }
         >
-          <Button danger onClick={showDeleteConfirm}>
-            <FormattedMessage
-              id="pages.searchTable.batchDeletion"
-              defaultMessage="Batch deletion"
-            />
-          </Button>
+          <Space wrap>
+            <Button onClick={showStatementsConfirm} icon={<FilePdfOutlined />}>
+              <FormattedMessage
+                id="pages.searchTable.batchStatement"
+                defaultMessage="Batch Statement"
+              />
+            </Button>
+            <Button danger onClick={showDeleteConfirm} icon={<DeleteOutlined />}>
+              <FormattedMessage
+                id="pages.searchTable.batchDeletion"
+                defaultMessage="Batch deletion"
+              />
+            </Button>
+          </Space>
         </FooterToolbar>
       )}
       <PageForm
