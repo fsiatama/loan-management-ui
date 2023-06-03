@@ -84,7 +84,7 @@ describe('Login Page', () => {
     // 等待接口返回结果
     await waitTime(5000);
 
-    await rootContainer.findAllByText('Blue Phoenix Financial');
+    await rootContainer.findAllByText('Loan Management');
 
     expect(rootContainer.asFragment()).toMatchSnapshot();
 

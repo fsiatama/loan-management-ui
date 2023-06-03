@@ -1,6 +1,6 @@
 {
-  "name": "Blue Phoenix Financial",
-  "short_name": "Blue Phoenix Financial",
+  "name": "Loan Management",
+  "short_name": "Loan Management",
   "display": "standalone",
   "start_url": "./?utm_source=homescreen",
   "theme_color": "#002140",

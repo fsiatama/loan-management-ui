@@ -11,7 +11,7 @@ export default {
   'layout.user.link.help': 'Help',
   'layout.user.link.privacy': 'Privacy',
   'layout.user.link.terms': 'Terms',
-  'app.copyright.produced': 'Blue Phoenix LLC',
+  'app.copyright.produced': 'Loan Management',
   'app.preview.down.block': '',
   'app.welcome.link.fetch-blocks': '',
   'app.welcome.link.block-list': '',

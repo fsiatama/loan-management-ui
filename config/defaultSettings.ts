@@ -14,10 +14,10 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Blue Phoenix',
+  title: 'Loan Management',
   siderMenuType: 'sub',
   pwa: false,
-  logo: 'https://carlosplazasmortgage.com/images/bluephoenix.png',
+  logo: '',
   iconfontUrl: '',
 };
 

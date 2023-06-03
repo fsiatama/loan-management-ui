@@ -102,7 +102,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            Blue Phoenix Dashboard
+            Loan Management
           </div>
         </div>
       </Card>

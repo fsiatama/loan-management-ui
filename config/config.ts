@@ -66,7 +66,7 @@ export default defineConfig({
    * @name layout
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Blue Phoenix LLC',
+  title: 'Loan Management',
   layout: {
     locale: true,
     ...defaultSettings,

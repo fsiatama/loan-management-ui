@@ -191,7 +191,7 @@
           </div>
         </div>
         <div class="loading-title">
-          Blue Phoenix LLC
+          Loan Management
         </div>
         <div class="loading-sub-title">
           Loading....
